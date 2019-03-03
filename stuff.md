@@ -6,17 +6,17 @@ permalink: /stuff/
 
 As computer scientists, software developers, programmers, web designers, what ever you are, we all walk a different path. The tech industry is so big there are things we likely wont touch.
 
-This is a list of things I have touched, in no particular order of experience or use, it could simply be modifying a file, or having something installed on my machine.
+This is a list of things I have touched, in no particular order of experience or use, it could simply be modifying a file, or having something installed on my machine. I have bolded some things I'm using on a regular basis.
 
 This list was inspired by [Scott Hansleman's list of tools](https://www.hanselman.com/tools/).
 
 # Languages / DSL
 
-* C# v8.0 (BETA)
+* **C#** v8.0 (BETA)
 * C++
 * C
 * ASM
-* C# IL
+* IL
 * Javascript
 * Java
 * Python
@@ -27,7 +27,7 @@ This list was inspired by [Scott Hansleman's list of tools](https://www.hanselma
 * HAML
 * JSON - does this count?
 * CSS
-* SCSS
+* **SCSS**
 * LESS
 * Puppet
 * Terraform
@@ -35,11 +35,11 @@ This list was inspired by [Scott Hansleman's list of tools](https://www.hanselma
 * Groovy
 * LUA
 * Markdown
-* Razor
+* **Razor**
 * ERB
 * Handlebars
 * Enterprise control language
-* Docker
+* **Docker**
 * Shell
 * Powershell
 * Bat
@@ -48,38 +48,37 @@ This list was inspired by [Scott Hansleman's list of tools](https://www.hanselma
 
 # .NET Ecosystem Frameworks / Libraries
 
-* .NET MVC
+* **.NET MVC**
 * .NET WebForms
-* .NET Core
+* **.NET Core**
 * RazorPages
-* NUnit
-* xUnit
+* **NUnit**
+* **xUnit**
 * Spring .NET
 * Blazor
 * M# (C#) Code Generator tool
 * EPPlus (Excel manipulation)
-* Task Parallel Library (TPL)
+* **Task Parallel Library** (TPL)
 * Selenium .NET
 
 # Dependency Injection Frameworks
 
 * Google Guice
 * Java Spring Framework
-* Microsoft.Extensions.DependencyInjection
+* **Microsoft.Extensions.DependencyInjection**
 * Ninject
 * AutoFac
 * Microsoft Unity
 * Service Locator
 * Spring .NET
 
-
 # Frameworks / Libraries
 
 * Java Servlets / JSPs
 * Spring Framework (Java)
-* Angular 2+
+* **Angular 2+**
 * jQuery + jQuery UI
-* Bootstrap v2 - v4.1
+* **Bootstrap v2 - v4.1**
 * Blueprint CSS grid framework
 * Node.js
 * Ruby on Rails 3/4
@@ -87,32 +86,34 @@ This list was inspired by [Scott Hansleman's list of tools](https://www.hanselma
 * Python Django
 * Discord.js
 * jUnit
-* Angular Material 2
+* **Angular Material 2**
 
 # CLI Tools
 
 * Vault
-* .NET Core
+* **.NET Core**
 * Visual Studio Build tools
 * AWS
-* NPM
-* Angular
-* Python PIP
+* **NPM**
+* **Angular**
+* **Python** PIP
 * Bundler
-* Gem
-* NuGet
+* **Gem**
+* **NuGet**
 * Chocolatey
-* Powershell
+* **Powershell**
+* **Bash**
 * cURL
 * csc.exe (cs compiler)
 * javac.exe (java compiler)
 * wsdl.exe
 * xsd.exe
 * yeoman
+* **docker**
 
 # IDEs / Editors
 
-* Visual Studio Code
+* **Visual Studio Code**
 * Atom
 * Sublime Text
 * TextPad
@@ -126,49 +127,49 @@ This list was inspired by [Scott Hansleman's list of tools](https://www.hanselma
 * Rubymine
 * Netbeans
 * Eclipse
-* Visual Studio 2008 - Visual Studio 2019 RC
+* **Visual Studio 2008 - Visual Studio 2019 RC**
 * Notepad++
-* LinqPad v3 - v5
+* **LinqPad** v3 - v5
 * Powershell ISE
 * Adobe Dreamweaver
 * CKEditor
 
 # CI/CD
 
-* Jenkins
-* TeamCity
+* **Jenkins**
+* **TeamCity**
 * AppVeyor
 
 # Version Control / Websites
 
 * SVN
-* Git
-* Gitlab
-* GitHub
+* **Git**
+* **Gitlab**
+* **GitHub**
 * CodePlex
 * Gitblit
 * SourceForge
-* Bitbucket
+* **Bitbucket**
 
 # Web Tools
 
 * Selenium
 * Chrome Dev tools
-* Telerik Fiddler4
-* Postman
+* **Telerik Fiddler4**
+* **Postman**
 
 # Terminals / Emulators
 
-* Hyper
+* **Hyper**
 * ConEmu
-* Cmder
+* **Cmder**
 * Win32 Console
 * PuTTY
 
 # Photo Editing
 
 * GiMP
-* Paint .NET
+* **Paint .NET**
 * Photoshop
 
 # Learning resources

@@ -4,17 +4,21 @@ title: About me
 permalink: /about/
 ---
 
-I've been a software developer for 8 years. I moved onto Java and enjoyed using that for websites and servers, then onto a higher level language we know as Ruby and developed sites using Rails, shortly after that I found C# and fell in love with it, it is my favourite language, it has been evolving over the years and the community and support around C# and the .NET eco system has been absolutely amazing. I've made console, desktop and web applications in C#.
+I've been a software developer for 8 years. I first started off with C/C++ before really taking a course in programming, though never really got further than very basic console applications. I moved onto Java and enjoyed using that for websites and servers, then onto a higher level language we know as Ruby,  developed sites using Rails, shortly after that I found myself with C# and fell in love with it, it is my favourite language, it has been evolving over the years and the community and support around C# and the .NET eco system has been absolutely amazing. I've made console, desktop and web applications in C#.
 
-Since graduating and being in the industry, my focus has been on line of business applications, with little to no low end programming, but more focus on using a wider variety of technologies and languages to get various jobs done. I've touched declarative programming languages, such as Puppet, Terraform and ECL. I've compiled TypeScript to Js using various 'task managers' such as Gulp.js and Grunt.js. I've touched Maven, MSBuild and Angular projects. I've played around with Less and Scss. I've installed and used countless plugins to Visual Studio code so i can read Groovy scripts for Jenkins Pipelines, read ECL code to submit workunits to a HPCC Map-reduce cluster. I've got the C# plugin to run .NET Core applications, the Python plugin to do small bits of Flask and load ML trained models into memory to serve a pridiction model being consumed by another Web API project in another language.
+Since graduating and being in the industry, my focus has been on line of business applications, with little to no low end programming after my degree, more focus on using a wider variety of technologies and languages to get various jobs done. I've touched declarative programming languages, such as Puppet, Terraform and ECL. I've compiled TypeScript to Js using various 'task managers' such as Gulp.js and Grunt.js. I've touched Maven, MSBuild and Angular projects. I've played around with Less and Scss. I've installed and used countless plugins to Visual Studio code so i can read Groovy scripts for Jenkins Pipelines, read ECL code to submit workunits to a HPCC Map-reduce cluster. I've got the C# plugin to run .NET Core applications, the Python plugin to do small bits of Flask and load ML trained models into memory to serve a pridiction model being consumed by another Web API project in another language.
 
 I've modified existing puppet code infrastructure to introduce new functionality to dump json files into the deployment directory of an application for secrets. I've encrypted sensitive values using Puppet EYAML encryption that goes into the Hiera yaml database.
 
 I've created and used Dockerfiles to help me try out and use existing things quickly without needing to setup a whole environment. I've created base images which contain certs for SSL or different environment variables.
 
-I've used countless CLI tools, to authenticate with Hashicorp Vault for encryption, Angular to generate components and compile the SPA. I've used CLI tools to restore and compile .NET Core project. To build a new Docker image or pull down existing docker images. To compose up a swarm of docker containers to demo a stack of multiple sites. I've used CLI tools to restore node packages, NuGet packages, Ruby Gems or Python modules.
+I've used countless CLI tools, to authenticate, generate, compile, build, restore, to build docker images, to pull down existing docker images. To compose up a swarm of docker containers to demo a stack of multiple sites. I've used a lot of CLI tools...
 
-During my software engineering degree, I managed to quit my smoking habit. I went on an extreme weight loss program and I managed to shed around 30Kg and have done quite well over the last 10 years in keeping active and healthy. I have quit smoking for 8 years.
+I've been in a company where the techincal team was very small, to a mid sized company that grew from roughly 20 to 120 employees. Now I work for a company that has offices across the globe.
+
+Checkout my page on [stuff](https://pjmagee.github.io/stuff) which covers a more in depth use of...stuff i've used throughout my career.
+
+when I was 20, I managed to quit my smoking habit and went on an extreme weight loss program and I managed to shed around 30Kg and have done quite well over the last 10 years in keeping active and healthy.
 
 My favourite alcoholic beverages are an IPA or Guinness. 🍺  
 I usually drink black coffee or coffee/tea with Soya milk. ☕
@@ -45,25 +49,20 @@ I've been to the following countries. ✈
 * Malta
 * Tenerife
 * Menorca
-* Atlanta, USA
+* USA (Atlanta, Georgia)
 
-### Events
+## Events
 
-Attended the following recent events
-
-* [Agile Tour London](http://2018.agiletourlondon.co.uk/) 2018
-* [Dreamhack, Jönköping, Sweden](https://dreamhack.com/). 2018
-
-Plan on attending
-
-* [EGX](https://www.egx.net/egx), 2019
-* [Twitchcon Europe](https://europe.twitchcon.com/en/) 2019
+* [Agile Tour London](http://2018.agiletourlondon.co.uk/) 2018 **[Attended]**
+* [Dreamhack, Jönköping, Sweden](https://dreamhack.com/). 2018 **[Attended]**
+* [EGX](https://www.egx.net/egx), 2019 **[Planned]**
+* [Twitchcon Europe](https://europe.twitchcon.com/en/) 2019 **[Planned]**
 
 For the sites that I regularly follow, feel free to check out [this page](https://pjmagee.github.io/sites)
 
-# Work
+## Work
 
-## Software Engineer, [Reed Business Information](https://www.reedbusiness.com/) (2015 - Present)
+### Software Engineer, [Reed Business Information](https://www.reedbusiness.com/) (2015 - Present)
 
 We're an agile team and try to be as full stack and self relient as possible, that means we get to play around with more than one technology.
 
