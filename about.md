@@ -16,14 +16,25 @@ I've used countless CLI tools, to authenticate with Hashicorp Vault for encrypti
 
 During my software engineering degree, I managed to quit my smoking habit. I went on an extreme weight loss program and I managed to shed around 30Kg and have done quite well over the last 10 years in keeping active and healthy. I have quit smoking for 8 years.
 
-My favourite alcoholic beverages are an IPA or Guinness.  
-I usually drink black coffee or coffee/tea with Soya milk.  
+My favourite alcoholic beverages are an IPA or Guinness. 🍺  
+I usually drink black coffee or coffee/tea with Soya milk. ☕
 
-I enjoy Mediterranean and Middle Eastern cuisine.
+I enjoy Mediterranean and Middle Eastern cuisine.  
+
+I've read a small amount of books, which I highly recommend. 📚
+
+* [Dependency Injection Principles Practices and Patterns](https://www.manning.com/books/dependency-injection-principles-practices-patterns)
+* [The Art of Unit Testing 2nd Edition](https://www.manning.com/books/the-art-of-unit-testing-second-edition)
+* [SOA Patterns](https://www.manning.com/books/soa-patterns)
+* [C# in Depth, 4th Edition](https://www.manning.com/books/c-sharp-in-depth-fourth-edition)
+
+Less techincal good reads:
+
+* [Forces of Nature, Brian Cox](https://www.amazon.co.uk/Forces-Nature-Professor-Brian-Cox/dp/0008210039/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=&sr=)
 
 I enjoy programming, games, music, golf, weight lifting and some travelling in between. I enjoy [Bioware](http://www.bioware.com/), [Blizzard](https://www.blizzard.com/en-gb/)  and [Ubisoft](https://www.ubisoft.com/en-gb/) games, such as the Mass Effect series, Heroes of the Storm, Knights of the Old Republic and the Assassin's Creed series.
 
-I've been to the following countries:
+I've been to the following countries. ✈
 
 * Wales
 * Sweden
@@ -36,7 +47,7 @@ I've been to the following countries:
 * Menorca
 * Atlanta, USA
 
-## Events
+### Events
 
 Attended the following recent events
 
@@ -48,33 +59,7 @@ Plan on attending
 * [EGX](https://www.egx.net/egx), 2019
 * [Twitchcon Europe](https://europe.twitchcon.com/en/) 2019
 
-## Some sites worth mentioning
-
-### People
-
-* [Scott Hanselman's blog](https://www.hanselman.com/)  
-* [Jeff Atwood's blog](https://blog.codinghorror.com/)  
-* [Steve Sanderson's blog](http://blog.stevensanderson.com/)  
-* [Jon Skeet's blog](https://codeblog.jonskeet.uk/)  
-* [Elon Musk's](https://twitter.com/elonmusk)  
-* [Martin Fowler](https://martinfowler.com/)  
-* [Jordan Peterson](https://jordanbpeterson.com)  
-
-### Sites
-
-* [The .NET foundation blog](https://dotnetfoundation.org/Blog)  
-* [Channel 9 by msdn](https://channel9.msdn.com/)  
-* [The ASP.NET Community standup](https://live.asp.net/)  
-* [The Hacker news](https://thehackernews.com/)  
-* [Jetbrains blog](https://blog.jetbrains.com/)
-* [Telerik's blog](https://www.telerik.com/blogs)  
-* [OpenAI blog](https://blog.openai.com/)  
-* [Angular blog](https://blog.angular.io/)  
-
-### Reddit
-
-* [r/programming](https://www.reddit.com/r/progamming)  
-* [r/csharp](https://www.reddit.com/r/csharp/)  
+For the sites that I regularly follow, feel free to check out [this page](https://pjmagee.github.io/sites)
 
 # Work
 
