@@ -30,9 +30,9 @@ This list was inspired by [Scott Hansleman's list of tools](https://www.hanselma
 * **SCSS**
 * LESS
 * Puppet
-* Terraform
-* TypeScript
-* Groovy
+* **Terraform**
+* **TypeScript**
+* **Groovy**
 * LUA
 * Markdown
 * **Razor**
@@ -41,7 +41,7 @@ This list was inspired by [Scott Hansleman's list of tools](https://www.hanselma
 * Enterprise control language
 * **Docker**
 * Shell
-* Powershell
+* **Powershell**
 * Bat
 * scriptcs
 * Go - I copied some Docker code and converted it to C#
@@ -50,12 +50,12 @@ This list was inspired by [Scott Hansleman's list of tools](https://www.hanselma
 
 * **.NET MVC**
 * .NET WebForms
-* **.NET Core**
+* **.NET Core & .NET Core MVC**
 * RazorPages
 * **NUnit**
 * **xUnit**
 * Spring .NET
-* Blazor
+* **Blazor**
 * M# (C#) Code Generator tool
 * EPPlus (Excel manipulation)
 * **Task Parallel Library** (TPL)
@@ -93,7 +93,7 @@ This list was inspired by [Scott Hansleman's list of tools](https://www.hanselma
 * Vault
 * **.NET Core**
 * Visual Studio Build tools
-* AWS
+* **AWS**
 * **NPM**
 * **Angular**
 * **Python** PIP
@@ -139,6 +139,13 @@ This list was inspired by [Scott Hansleman's list of tools](https://www.hanselma
 * **Jenkins**
 * **TeamCity**
 * AppVeyor
+* Gitlab CI
+
+# Databases
+
+* **Mariadb**
+* **MSSQL Server 2008-2017**
+* PostgreSQL
 
 # Version Control / Websites
 
@@ -154,7 +161,7 @@ This list was inspired by [Scott Hansleman's list of tools](https://www.hanselma
 # Web Tools
 
 * Selenium
-* Chrome Dev tools
+* **Chrome Dev tools**
 * **Telerik Fiddler4**
 * **Postman**
 
