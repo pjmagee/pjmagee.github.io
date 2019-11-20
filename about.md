@@ -16,7 +16,7 @@ I've used countless CLI tools, to authenticate, generate, compile, build, restor
 
 I've been in a company where the techincal team was very small, to a mid sized company that grew from roughly 20 to 120 employees. Now I work for a company that has offices across the globe.
 
-Checkout my page on [stuff](https://pjmagee.github.io/stuff) which covers a more in depth use of...stuff i've used throughout my career.
+Checkout my page on [stuff](https://pjmagee.github.io/stuff) which covers a more in depth look at techy things.
 
 when I was 20, I managed to quit my smoking habit and went on an extreme weight loss program and I managed to shed around 30Kg and have done quite well over the last 10 years in keeping active and healthy.
 
@@ -62,23 +62,22 @@ For the sites that I regularly follow, feel free to check out [this page](https:
 
 ## Work
 
-### Software Engineer, [Reed Business Information](https://www.reedbusiness.com/) (2015 - Present)
+### Senior Software Engineer, [Reed Business Information](https://www.reedbusiness.com/) (2015 - Present)
 
-We're an agile team and try to be as full stack and self relient as possible, that means we get to play around with more than one technology.
+Full stack development.
+For CI/CD we use Puppet, Jenkins & TeamCity, moving towards Kubernetes.
+For cloud based configuration, we use Terraform.
 
-For CI/CD we use Kubernetes, Puppet, Jenkins & TeamCity.  
-For cloud based configuration, we use Terraform.  
-
-For day to day "software development", we use:  
+For day to day software development:
 
 * .NET Framework (our mature products)
-* .NET Core (Web API, Razor view components, small apps)
+* .NET Core (API, Razor view components, small apps)
 * Python (Flask, ML)
-* Angular 6+ (our greenfield products)
+* Angular
 * SCSS (custom styles, some bootstrap, angular styling, grunt tasks)
 * NPM, Grunt (mature and greenfield)
 * VS Code (with a lot of plugins) & Visual Studio 2017/2019
-* Nexus3 private dependency repository (like myget and artifactory)
+* Sonatype Nexus3 (artifact repository like myget and jfrog artifactory)
 
 ### Software Developer, [Geeks](http://www.geeks.ltd.uk/) (2013 – 2015)
 
