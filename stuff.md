@@ -12,7 +12,15 @@ This list was inspired by [Scott Hansleman's list of tools](https://www.hanselma
 
 # Languages / DSL
 
-* **C#** v8.0 (BETA)
+* **C#** v8.0
+* **Terraform**
+* **TypeScript**
+* **Groovy**
+* **SCSS**
+* **Razor**
+* **Docker**
+* **Powershell**
+* **YAML** (kub, heml, compose, puppet hiera, gitlab ci)
 * C++
 * C
 * ASM
@@ -23,49 +31,41 @@ This list was inspired by [Scott Hansleman's list of tools](https://www.hanselma
 * Ruby
 * HTML
 * XML
-* YAML
 * HAML
-* JSON - does this count?
+* JSON
 * CSS
-* **SCSS**
 * LESS
 * Puppet
-* **Terraform**
-* **TypeScript**
-* **Groovy**
 * LUA
 * Markdown
-* **Razor**
 * ERB
 * Handlebars
 * Enterprise control language
-* **Docker**
-* Shell
-* **Powershell**
-* Bat
+* Shell (dockery stuff)
+* Bat (repo builds)
 * scriptcs
 * Go - I copied some Docker code and converted it to C#
 
 # .NET Ecosystem Frameworks / Libraries
 
 * **.NET MVC**
-* .NET WebForms
 * **.NET Core & .NET Core MVC**
-* RazorPages
-* **NUnit**
 * **xUnit**
-* Spring .NET
 * **Blazor**
+* **Task Parallel Library** (TPL)
+* .NET WebForms
+* RazorPages
+* NUnit
+* Spring .NET
 * M# (C#) Code Generator tool
 * EPPlus (Excel manipulation)
-* **Task Parallel Library** (TPL)
 * Selenium .NET
 
 # Dependency Injection Frameworks
 
+* **Microsoft.Extensions.DependencyInjection**
 * Google Guice
 * Java Spring Framework
-* **Microsoft.Extensions.DependencyInjection**
 * Ninject
 * AutoFac
 * Microsoft Unity
@@ -74,11 +74,12 @@ This list was inspired by [Scott Hansleman's list of tools](https://www.hanselma
 
 # Frameworks / Libraries
 
+* **Angular 2+**
+* **Bootstrap v2 - v4.1**
+* **Angular Material 2**
 * Java Servlets / JSPs
 * Spring Framework (Java)
-* **Angular 2+**
 * jQuery + jQuery UI
-* **Bootstrap v2 - v4.1**
 * Blueprint CSS grid framework
 * Node.js
 * Ruby on Rails 3/4
@@ -86,34 +87,35 @@ This list was inspired by [Scott Hansleman's list of tools](https://www.hanselma
 * Python Django
 * Discord.js
 * jUnit
-* **Angular Material 2**
 
 # CLI Tools
 
-* Vault
 * **.NET Core**
-* Visual Studio Build tools
 * **AWS**
 * **NPM**
 * **Angular**
 * **Python** PIP
-* Bundler
 * **Gem**
 * **NuGet**
-* Chocolatey
 * **Powershell**
 * **Bash**
+* **docker**
+* Vault (Hasicorp encryption solution)
+* Visual Studio Build tools
+* Bundler
+* choco (Chocolatey packages)
 * cURL
 * csc.exe (cs compiler)
 * javac.exe (java compiler)
 * wsdl.exe
 * xsd.exe
 * yeoman
-* **docker**
 
 # IDEs / Editors
 
 * **Visual Studio Code**
+* **Visual Studio 2008 - Visual Studio 2019**
+* **LinqPad** v6
 * Atom
 * Sublime Text
 * TextPad
@@ -127,9 +129,7 @@ This list was inspired by [Scott Hansleman's list of tools](https://www.hanselma
 * Rubymine
 * Netbeans
 * Eclipse
-* **Visual Studio 2008 - Visual Studio 2019 RC**
 * Notepad++
-* **LinqPad** v3 - v5
 * Powershell ISE
 * Adobe Dreamweaver
 * CKEditor
@@ -168,15 +168,16 @@ This list was inspired by [Scott Hansleman's list of tools](https://www.hanselma
 # Terminals / Emulators
 
 * **Hyper**
-* ConEmu
 * **Cmder**
+* **Windows Terminal** (In preview!)
+* ConEmu
 * Win32 Console
 * PuTTY
 
 # Photo Editing
 
-* GiMP
 * **Paint .NET**
+* GiMP
 * Photoshop
 
 # Learning resources
