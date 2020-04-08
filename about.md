@@ -62,7 +62,27 @@ For the sites that I regularly follow, feel free to check out [this page](https:
 
 ## Work
 
-### Senior Software Engineer, [Reed Business Information](https://www.reedbusiness.com/) (2015 - Present)
+### Senior Software Engineer, [I.C.I.S](https://www.reedbusiness.com/products-services/icis/) (2020 - Present)
+
+I moved market into the largest petrochemical market information provider as a shift to gain and provide more knoweledge around subsidaries of Reed Business Information.
+
+Full stack development.
+For CI/CD we use TeamCity, Gitlab & Docker.
+For cloud based configuration, we use Terraform.
+
+For day to day software development:
+
+* .NET Framework (our mature products)
+* .NET Core (API, Razor view components, small apps)
+* Python (Flask, ML)
+* Angular, React, SCSS
+* NPM, Grunt (mature and greenfield)
+* VS Code (with a lot of plugins) & Visual Studio 2017/2019
+* Sonatype Nexus3 (artifact repository like myget and jfrog artifactory)
+
+### Senior Software Engineer, [XpertHR](https://www.reedbusiness.com/products-services/xperthr/) (2015 - 2020)
+
+I worked at XpertHR, a subsidiary of [Reed Business Information](https://www.reedbusiness.com) for 5 years developing various products related to salary market data.
 
 Full stack development.
 For CI/CD we use Puppet, Jenkins & TeamCity, moving towards Kubernetes.
