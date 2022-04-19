@@ -7,7 +7,7 @@
 	</author>
 	<link rel="self" href="/" />
 	<rights>Copyright © 2022</rights>
-	<updated>2022-04-19T19:05:08Z</updated>
+	<updated>2022-04-19T19:07:28Z</updated>
 	<entry>
 		<id>/posts/2022-04-18-1password-and-ssh</id>
 		<title>1Password and SSH</title>
@@ -15,7 +15,7 @@
 			<name>Patrick Magee</name>
 		</author>
 		<link href="/posts/2022-04-18-1password-and-ssh" />
-		<updated>2022-04-19T19:02:56Z</updated>
+		<updated>2022-04-19T19:05:14Z</updated>
 		<content>&lt;p&gt;I've been using a Password manager for years now, however one thing which always annnoyed me was the lack of SSH support and having your Private key stored in the .ssh folder on your machine. Or you would have to manually generate your SSH key using Putty. Then you would upload your public key and make sure you never lost your private key since it was always stored in the .ssh folder unless you backed it up securely and then would put it back on a fresh install.&lt;/p&gt;
 &lt;p&gt;1Password has a feature which allows it to act as an SSH Agent meaning you no longer need to store your secrets on disk in the .ssh folder but can instead store your SSH data in 1Password.&lt;/p&gt;
 &lt;p&gt;1Password allows you to store all sorts of sensitive information. You can see in the screenshot below that SSH is an option.&lt;/p&gt;
@@ -39,7 +39,7 @@ Once I'm validated my SSH session will continue and I will be able to use git pu
 			<name>Patrick Magee</name>
 		</author>
 		<link href="/posts/2020-02-17-blazor-and-svg-files-part-2" />
-		<updated>2022-04-19T19:02:56Z</updated>
+		<updated>2022-04-19T19:05:14Z</updated>
 		<content>&lt;p&gt;It's been a while since my last blog post about Blazor.  My original blog post was showing how to use Blazer client side only with SVG files, by requesting those images using a http client from the browser and getting the content from the wwwroot.&lt;/p&gt;
 &lt;p&gt;But what if you are using &lt;code&gt;services.AddServerSideBlazor();&lt;/code&gt;?&lt;/p&gt;
 &lt;p&gt;My solution was to make use of &lt;code&gt;IWebHostEnvironment&lt;/code&gt;, and inject this into the registered &lt;code&gt;SvgService&lt;/code&gt;. Doing this, you get access to the &lt;code&gt;WebRootFileProvider&lt;/code&gt;, from there you can query other sub folders within the &lt;code&gt;wwwroot&lt;/code&gt;.&lt;/p&gt;
@@ -89,7 +89,7 @@ Once I'm validated my SSH session will continue and I will be able to use git pu
 			<name>Patrick Magee</name>
 		</author>
 		<link href="/posts/2019-03-19-blazor-and-svg-files-part-1" />
-		<updated>2022-04-19T19:02:56Z</updated>
+		<updated>2022-04-19T19:05:14Z</updated>
 		<content>&lt;p&gt;I've been experimenting with Blazor and using Bootstrap with SVG's. For Angular I remember that the Material design library had a really nice way of being able to pull in SVG files but this doesn't quite yet exist for blazor.&lt;/p&gt;
 &lt;p&gt;I was really keen on using some SVG's from &lt;a href="https://simpleicons.org/"&gt;Simple Icons&lt;/a&gt; which contains loads of SVG's based on popular brands.&lt;/p&gt;
 &lt;p&gt;Well, you're probably thinking, what do you mean &amp;quot;nice way of pulling in SVG files&amp;quot;. You just use the &lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt; tag and in the &lt;code&gt;src&lt;/code&gt; attribute just throw in the path to the svg file that is served from the server. Well, it's not the easy if you wan't to manipulate or style your SVG, since you cant do that by using the &lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt; tag approach. There are other solutions that use &lt;code&gt;jQuery&lt;/code&gt; to load that file and then replace the &lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt; tag with the actual raw &lt;code&gt;&amp;lt;svg&amp;gt;&lt;/code&gt; but it was just so many lines of code and also it didnt seem like a good solution for my problem because I don't really want to use &lt;code&gt;jquery&lt;/code&gt; unless i reeaaallly need to, since i want to write the least amount of js as possible.&lt;/p&gt;
@@ -105,7 +105,7 @@ Once I'm validated my SSH session will continue and I will be able to use git pu
 			<name>Patrick Magee</name>
 		</author>
 		<link href="/posts/2019-03-19-blazor-and-pagination" />
-		<updated>2022-04-19T19:02:56Z</updated>
+		<updated>2022-04-19T19:05:14Z</updated>
 		<content>&lt;p&gt;The snippets below can be used to create a pagination razor component for a Bootstrap table with a pager.&lt;/p&gt;
 &lt;p&gt;When the pager component recieves a click event, it sends that event back to the parent page component, and calls the &lt;code&gt;PageAsync&lt;/code&gt; function to get the requested page from the server.&lt;/p&gt;
 &lt;p&gt;We then call the &lt;code&gt;StateHasChanged()&lt;/code&gt; function to ensure the component is rerendered and sent back to the client.&lt;/p&gt;
