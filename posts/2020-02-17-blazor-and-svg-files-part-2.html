@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Patrick Magee">
+
+  <title>Patrick&#x27;s Blog - Blazor &amp; SVG files - Part 2</title>
+
+  <link rel="canonical" href="/posts/2020-02-17-blazor-and-svg-files-part-2">
+
+      <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
+      <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
+
+  <meta name="application-name" content="Patrick&#x27;s Blog" />
+  <meta name="msapplication-tooltip" content="Patrick&#x27;s Blog" />
+  <meta name="msapplication-starturl" content="/" />
+  <meta property="og:title" content="Patrick&#x27;s Blog - Blazor &amp; SVG files - Part 2" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="/posts/2020-02-17-blazor-and-svg-files-part-2" />
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/scss/bootstrap.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/brands.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css' data-no-mirror>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' data-no-mirror>
+
+  <!-- Custom styles for this template -->
+  <link href="/scss/clean-blog.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/plugins/autoloader/prism-autoloader.min.js" data-no-mirror></script>
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism.css">
+
+  <!-- Lunr search -->
+
+  
+
+
+  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Patrick&#x27;s Blog</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/posts">Posts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/tags">Tags</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">About me</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/bookmarks">Bookmarks</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/radar">Tech Radar</a>
+            </li>
+</ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Page Header -->
+  <header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="post-heading">
+          <h1>
+            Blazor &amp; SVG files - Part 2
+          </h1>
+              <div class="meta">Published on Tuesday, April 19, 2022</div>
+                <div class="mt-3">
+                      <a href="/tags/c" class="badge badge-light"> C#</a>
+                      <a href="/tags/blazor" class="badge badge-light"> Blazor</a>
+                      <a href="/tags/svg-files" class="badge badge-light"> SVG Files</a>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div id="content" class="col-md-12">
+        <p>It's been a while since my last blog post about Blazor.  My original blog post was showing how to use Blazer client side only with SVG files, by requesting those images using a http client from the browser and getting the content from the wwwroot.</p>
+<p>But what if you are using <code>services.AddServerSideBlazor();</code>?</p>
+<p>My solution was to make use of <code>IWebHostEnvironment</code>, and inject this into the registered <code>SvgService</code>. Doing this, you get access to the <code>WebRootFileProvider</code>, from there you can query other sub folders within the <code>wwwroot</code>.</p>
+<script src="https://gist.github.com/pjmagee/98b0995581ebbb7ea9d64a21863e0d43.js"></script>
+<p>Now with the <code>SvgService</code> defined, which is a collection of svg's for different technology stacks, you can pass this into any <code>Component</code>.</p>
+<p>Using <code>&#64;inject</code>, <code>[Inject]</code> or <code>&#64;inherits OwningComponentBase</code> you can get an instance of the <code>SvgService</code>, and use it to render the svg.</p>
+<h3 id="example-markup">Example markup</h3>
+<pre><code class="language-html">&lt;td class=&quot;&#64;item.Kind.GetIconClass() text-center&quot;&gt;&#64;SvgService.GetSvg(item.Kind)&lt;/td&gt;
+</code></pre>
+<h3 id="example-component-code">Example component code</h3>
+<pre><code class="language-c#">&#64;code
+{
+    [Inject]
+    SvgService SvgService { get; set; }
+}
+</code></pre>
+<p>The <code>GetSvg</code> function has an enum parameter, using the new <code>C# 9 switch syntax</code> it accesses the raw SVG contents stored in the Dictionary as <code>MarkupString</code>, which Blazor knows how to render properly on the page.</p>
+<pre><code class="language-c#">public MarkupString GetSvg(EcosystemKind kind) =&gt; kind switch
+{
+    EcosystemKind.Docker =&gt; svgs[&quot;docker&quot;],
+    EcosystemKind.Gradle =&gt; svgs[&quot;gradle&quot;],
+    EcosystemKind.Maven =&gt; svgs[&quot;java&quot;],
+    EcosystemKind.Npm =&gt; svgs[&quot;npm&quot;],
+    EcosystemKind.NuGet =&gt; svgs[&quot;nuget&quot;],
+    EcosystemKind.PyPi =&gt; svgs[&quot;python&quot;],
+    EcosystemKind.RubyGem =&gt; svgs[&quot;ruby&quot;],
+    _ =&gt; Empty
+};
+</code></pre>
+<p>For something this simple with no user/request specific data, this can be registered as a <code>Singleton</code> instance and shared to all components.</p>
+<pre><code class="language-c#">    private static IServiceCollection RegisterRazorComponentServices(this IServiceCollection services) =&gt; services
+            .AddSingleton&lt;SvgService&gt;() // Share this same SVG service across ALL components
+            .AddScoped&lt;NavigationService&gt;();
+</code></pre>
+<h2 id="improving-on-this-solution">Improving on this solution</h2>
+<p>The next step would be figure out if you can make the SVG Service, an easy to use sharable Blazor component itself, something such as <code>&lt;CustomSvg Kind=&quot;enum&quot; /&gt;</code></p>
+<blockquote class="imgur-embed-pub" lang="en" data-id="mlo3eJH"><a href="//imgur.com/mlo3eJH">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+<blockquote class="imgur-embed-pub" lang="en" data-id="lyZoaYN"><a href="//imgur.com/lyZoaYN">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+<blockquote class="imgur-embed-pub" lang="en" data-id="9dhvv0e"><a href="//imgur.com/9dhvv0e">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+
+<div class="comments">
+    <div id="disqus_thread"></div>
+    <script>
+        /**
+        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+        /*
+        var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://' + 'pjmagee-github-io' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+        <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright text-muted m-0">Copyright &#xA9; 2022</p>
+                    <br />
+                    <ul class="list-inline text-center small">
+                            <li class="list-inline-item">
+                                <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="/feed.atom"><i class="fa fa-square-rss"></i> Atom Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="http://stackoverflow.com/users/935280/patrick-magee"><i class="fa-brands fa-stack-overflow"></i> Stack Overflow</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://www.linkedin.com/in/patrick-magee-76216959"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://github.com/pjmagee"><i class="fa-brands fa-github-square"></i> GitHub</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://twitter.com/PatrickMageez"><i class="fa-brands fa-twitter-square"></i> Twitter</a>
+                            </li>
+                    </ul>
+                    <br />
+                    <div class="font-weight-bold small"><a href="https://statiq.dev">Generated by Statiq</a></div>
+                </div>
+        </div>
+    </div>
+</footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  
+<script>
+       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-51533669-1', 'auto');
+		ga('send', 'pageview', {
+		  'page': '<a href="/posts/2020-02-17-blazor-and-svg-files-part-2">Blazor &amp; SVG files - Part 2</a>',
+		  'title': 'Patrick&#x27;s Blog - Blazor &amp; SVG files - Part 2'
+		});
+</script>
+
+
+  
+
+  <!-- Custom scripts for this template -->
+  <script src="/js/clean-blog.js"></script>
+
+</body>
+
+</html>
