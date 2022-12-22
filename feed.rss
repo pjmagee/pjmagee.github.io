@@ -6,8 +6,46 @@
 		<description />
 		<copyright>Copyright © 2022</copyright>
 		<managingEditor>Patrick Magee</managingEditor>
-		<pubDate>Fri, 09 Sep 2022 11:46:44 GMT</pubDate>
-		<lastBuildDate>Fri, 09 Sep 2022 11:46:44 GMT</lastBuildDate>
+		<pubDate>Thu, 22 Dec 2022 08:28:05 GMT</pubDate>
+		<lastBuildDate>Thu, 22 Dec 2022 08:28:05 GMT</lastBuildDate>
+		<item>
+			<title>SWTOR and Login Automation</title>
+			<link>/posts/2022-12-22-swtor-login-automation</link>
+			<description>&lt;p&gt;Power Automate should be installed already if you are on Windows 11. I created a brand new flow and named it 'SWTOR Launch'.&lt;/p&gt;</description>
+			<author>Patrick Magee</author>
+			<guid isPermaLink="false">/posts/2022-12-22-swtor-login-automation</guid>
+			<pubDate>Thu, 22 Dec 2022 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Power Automate should be installed already if you are on Windows 11. I created a brand new flow and named it 'SWTOR Launch'.&lt;/p&gt;
+&lt;p&gt;You will need to install the 1Password CLI too and ensure it's added to your &lt;code&gt;PATH&lt;/code&gt; like any other tool.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://i.imgur.com/i397HPZ.png" alt="1Password CLI setting"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://i.imgur.com/xrPllgz.png" alt="Power Automate"&gt;&lt;/p&gt;
+&lt;p&gt;There are almost endless possibilies to automate tasks from Power automate ranging from remote to local. Lets take a look at how I have automated the login process for SWTOR.&lt;/p&gt;
+&lt;p&gt;The next screenshot shows all the individual actions I have inserted as part of my new flow. Each step is using a specific feature which you can click and drag onto the flow which you can then further customise each step to read from custom variables etc.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://i.imgur.com/J7Kb9QM.png" alt="Flow Steps"&gt;&lt;/p&gt;
+&lt;p&gt;The first step is to ensure the Launcher is actually running, so that we can insert the credentials into the launcher. The next step is to create a custom script step and use the 1Password CLI tool (added to my PATH) and to use the special one password item API to extract the credentials from my Password manager (This step actually activates Windows Hello, where I can tap my Ubikey to authenticate and allow 1Password to continue).&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://i.imgur.com/KPaEgUJ.png" alt="1Password"&gt;&lt;/p&gt;
+&lt;p&gt;This command is essentually going to extract the following which is stored in my 1Password like so.....&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://i.imgur.com/8XnU7FT.png" alt="1Password output"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://i.imgur.com/3RJeY9k.png" alt="1Password item"&gt;&lt;/p&gt;
+&lt;p&gt;We want 1Password to output this in a format which we can then consume easily in Power Automate, which is &lt;code&gt;JSON&lt;/code&gt; so we use the &lt;code&gt;--format json&lt;/code&gt;. This is then inserted into a `%PowershellOutput% variable. Variables can be freely renamed, I just left the default name.&lt;/p&gt;
+&lt;p&gt;Once we have this, we want to then navigate and extract some of the variables for debugging and ease of use in the following step, which is to convert JSON to a &lt;code&gt;custom object&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://i.imgur.com/DrC76ud.png" alt="Convert to custom object"&gt;&lt;/p&gt;
+&lt;p&gt;Once the step runs, you'll notice that the variables are visible as they become populated on the right hand side of the flow window.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://i.imgur.com/5jgP9uN.png" alt="Variables"&gt;&lt;/p&gt;
+&lt;p&gt;I then fill in the following additional variables based on the fields that will need to entered within the Launcher. Using the &lt;code&gt;custom object&lt;/code&gt; accessors I populate the variables so that they can be used in the UI automation steps.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://i.imgur.com/Y8wIngk.png" alt="Secrets"&gt;&lt;/p&gt;
+&lt;p&gt;Next is to ensure that the UI Elements are configured in Power Automate. You can add UI elements by selecting Windows and configuring how it should scan a UI for fields.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://i.imgur.com/vn8wqww.png" alt="UI Element 1"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://i.imgur.com/UcSyi7L.png" alt="UI Element 2"&gt;&lt;/p&gt;
+&lt;p&gt;You will need to this process for each individual element that needs to have text entered or clicked on.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://i.imgur.com/sHVogED.png" alt="UI Element 3"&gt;&lt;/p&gt;
+&lt;p&gt;Once the UI elements are in, we can then add steps to &lt;code&gt;reference&lt;/code&gt; these UI elements and populate them.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://i.imgur.com/Bth1UFc.png" alt="UI Element 4"&gt;&lt;/p&gt;
+&lt;p&gt;Here's a 30s demo of Power Automate running the flow&lt;/p&gt;
+&lt;p&gt;&lt;img src="/img/swtor/automate.gif" alt="UI Element 5"&gt;&lt;/p&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 		<item>
 			<title>1Password and SSH</title>
 			<link>/posts/2022-04-18-1password-and-ssh</link>
