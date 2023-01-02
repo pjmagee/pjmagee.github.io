@@ -1,5 +1,5 @@
-Title: SWTOR and Login Automation (Part 2)  
-Lead: Automate CEF applications that didn't disable debugging 😲  
+Title: How to hi-jack CEF applications
+Lead: Automate CEF applications that didn't disable debugging
 Published: 2023-01-02
 Tags:
   - 1Password
