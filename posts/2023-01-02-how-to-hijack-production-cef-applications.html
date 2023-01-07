@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="author" content="Patrick Magee">
 
-  <title>Patrick&#x27;s Blog - Heroes of the Storm</title>
+  <title>Patrick&#x27;s Blog - How to hi-jack CEF applications</title>
 
-  <link rel="canonical" href="/tags/heroes-of-the-storm">
+  <link rel="canonical" href="/posts/2023-01-02-how-to-hijack-production-cef-applications">
 
       <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
       <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
@@ -17,9 +17,9 @@
   <meta name="application-name" content="Patrick&#x27;s Blog" />
   <meta name="msapplication-tooltip" content="Patrick&#x27;s Blog" />
   <meta name="msapplication-starturl" content="/" />
-  <meta property="og:title" content="Patrick&#x27;s Blog - Heroes of the Storm" />
+  <meta property="og:title" content="Patrick&#x27;s Blog - How to hi-jack CEF applications" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="/tags/heroes-of-the-storm" />
+  <meta property="og:url" content="/posts/2023-01-02-how-to-hijack-production-cef-applications" />
 
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -88,10 +88,19 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <div class="site-heading">
+        <div class="post-heading">
           <h1>
-            Heroes of the Storm
+            How to hi-jack CEF applications
           </h1>
+            <h2 class="subheading">Automate CEF applications that didn&#x27;t disable debugging</h2>
+              <div class="meta">Published on Monday, 02 January 2023</div>
+                <div class="mt-3">
+                      <a href="/tags/1password" class="badge badge-light"> 1Password</a>
+                      <a href="/tags/swtor" class="badge badge-light"> SWTOR</a>
+                      <a href="/tags/mmorpg" class="badge badge-light"> MMORPG</a>
+                      <a href="/tags/cef" class="badge badge-light"> CEF</a>
+                      <a href="/tags/chrome-debugger" class="badge badge-light"> Chrome Debugger</a>
+                </div>
         </div>
       </div>
     </div>
@@ -102,40 +111,85 @@
   <div class="container">
     <div class="row">
       <div id="content" class="col-md-12">
-            <div class="container-sm-height">
-        <div class="row row-sm-height">
-            <div class="col-md-6 right-border col-sm-height">
-                
+        <p>It's important to ensure that you disable debugging functionality before releasing to production. Password protecting your CEF application exe can be bypassed by users who know which arguments they should pass to the exe, which can enable users to bypass the security you put in place.</p>
+<p>Take the example below where the self contained isolated non Steam version of the Launcher for SWTOR does not protect against remote debugging, enabling the ability to extract full source code of the Launcher, reverse engineer the native interop to the C++ dll and also being able to automate the usage of the desktop application with a WebDriver.</p>
+<pre><code class="language-C#">
+async Task Main()
+{	
+	// use 1Password CLI to extract item you need for logging in
 
+    var opCLI = &#64;&quot;C:\Users\patri\OneDrive\tools\op.exe&quot;;
+    var args = &quot;item get SWTOR --format json&quot;;
+    var driverExeDir = &#64;&quot;C:\Users\patri\Downloads\chromedriver_win32&quot;;
+    var cefClient = &#64;&quot;G:\Star Wars - The Old Republic\launcher.exe&quot;;
 
-<div class="post-preview">
-    <h2 class="post-title"><a href="/posts/2021-08-07-heroes-of-the-storm-d3js">Heroes of the Storm and D3.js</a></h2>
-        <div class="post-subtitle">A hierarchical edge graph</div>
-    <p class="post-meta">Published on Thursday, 08 July 2021</p>
-<p>One of my favourite games is a hero brawler game called Heroes of the Storm. It's a 5 people versus 5 people game.<br>
-There are 3 lanes on the map and the goal is to kill their core before they kill your core.</p>        <p class="small"><a href="/posts/2021-08-07-heroes-of-the-storm-d3js">Read more...</a></p>
-</div>
+	using (var op = Process.Start(new ProcessStartInfo { FileName = opCLI, RedirectStandardOutput = true, Arguments = args }))
+	{
+		using(var document = JsonDocument.Parse(await op.StandardOutput.ReadToEndAsync()))
+		{
+			var items = document.RootElement
+                .GetProperty(&quot;fields&quot;)
+                .EnumerateArray()
+                .Where(x =&gt; x.GetProperty(&quot;id&quot;).ValueEquals(&quot;username&quot;) || 
+                            x.GetProperty(&quot;id&quot;).ValueEquals(&quot;password&quot;) || 
+                            x.GetProperty(&quot;type&quot;).ValueEquals(&quot;OTP&quot;))
+                .ToArray();
 
-            </div>
-            <div class="col-md-4 mt-4 mt-md-0 col-sm-height">
-                    <a href="/tags/c" class="badge badge-light"> C# (4)</a>
-                    <a href="/tags/1password" class="badge badge-light"> 1Password (3)</a>
-                    <a href="/tags/swtor" class="badge badge-light"> SWTOR (2)</a>
-                    <a href="/tags/mmorpg" class="badge badge-light"> MMORPG (2)</a>
-                    <a href="/tags/blazor" class="badge badge-light"> Blazor (2)</a>
-                    <a href="/tags/svg-files" class="badge badge-light"> SVG Files (2)</a>
-                    <a href="/tags/cef" class="badge badge-light"> CEF (1)</a>
-                    <a href="/tags/chrome-debugger" class="badge badge-light"> Chrome Debugger (1)</a>
-                    <a href="/tags/ssh" class="badge badge-light"> SSH (1)</a>
-                    <a href="/tags/javascript" class="badge badge-light"> Javascript (1)</a>
-                    <a href="/tags/heroes-of-the-storm" class="badge badge-dark"> Heroes of the Storm (1)</a>
-                    <a href="/tags/razor" class="badge badge-light"> Razor (1)</a>
-                    <a href="/tags/pagination" class="badge badge-light"> Pagination (1)</a>
-            </div>
-        </div>
-    </div>
+			var details = new
+			{
+				username = items[0].GetProperty(&quot;value&quot;).GetString(),
+				password = items[1].GetProperty(&quot;value&quot;).GetString(),
+				otp = items[2].GetProperty(&quot;totp&quot;).GetString(),
+			};
 
-      </div>
+			// Chrome/75.0.3770.100
+			// Download the Driver for the CEF client exe and configure additional arguments			
+			var options = new ChromeOptions() { LeaveBrowserRunning = true, BinaryLocation = cefClient };
+			options.AddArgument(&quot;--debug&quot;);
+			options.AddArgument(&quot;--remote-debugging-port=9222&quot;);
+			
+			using (IWebDriver driver = new ChromeDriver(driverExeDir, options))
+			{
+				// Use Chrome/Edge and inspect to find the right elements you need to automate and then apply this to your code				
+				driver.FindElement(By.XPath(&quot;//*[&#64;id=\&quot;usernameInput\&quot;]&quot;)).Clear();				
+				driver.FindElement(By.XPath(&quot;//*[&#64;id=\&quot;usernameInput\&quot;]&quot;)).SendKeys(details.username);
+				
+				driver.FindElement(By.XPath(&quot;//*[&#64;id=\&quot;passwordInput\&quot;]&quot;)).SendKeys(details.password);
+				driver.FindElement(By.XPath(&quot;//*[&#64;name=\&quot;securitykey\&quot;]&quot;)).SendKeys(details.otp);
+				
+				driver.FindElement(By.Id(&quot;nextButton&quot;)).Click();	
+				
+				await Task.Delay(1000);				
+				driver.FindElement(By.Id(&quot;closeAlertsBtn&quot;)).Click();				
+				await Task.Delay(2000);				
+				driver.FindElement(By.ClassName(&quot;hitbox&quot;)).Click();
+			}
+		}
+	}
+}
+</code></pre>
+
+<div class="comments">
+    <div id="disqus_thread"></div>
+    <script>
+        /**
+        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+        /*
+        var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://' + 'pjmagee-github-io' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>      </div>
     </div>
   </div>
 
@@ -188,8 +242,8 @@ There are 3 lanes on the map and the goal is to kill their core before they kill
 
 		ga('create', 'UA-51533669-1', 'auto');
 		ga('send', 'pageview', {
-		  'page': '<a href="/tags/heroes-of-the-storm">Heroes of the Storm</a>',
-		  'title': 'Patrick&#x27;s Blog - Heroes of the Storm'
+		  'page': '<a href="/posts/2023-01-02-how-to-hijack-production-cef-applications">How to hi-jack CEF applications</a>',
+		  'title': 'Patrick&#x27;s Blog - How to hi-jack CEF applications'
 		});
 </script>
 

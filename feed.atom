@@ -6,8 +6,76 @@
 		<name>Patrick Magee</name>
 	</author>
 	<link rel="self" href="/" />
-	<rights>Copyright © 2022</rights>
-	<updated>2022-12-22T08:28:05Z</updated>
+	<rights>Copyright © 2023</rights>
+	<updated>2023-01-07T13:34:00Z</updated>
+	<entry>
+		<id>/posts/2023-01-02-how-to-hijack-production-cef-applications</id>
+		<title>How to hi-jack CEF applications</title>
+		<author>
+			<name>Patrick Magee</name>
+		</author>
+		<link href="/posts/2023-01-02-how-to-hijack-production-cef-applications" />
+		<updated>2023-01-02T00:00:00Z</updated>
+		<content>&lt;p&gt;It's important to ensure that you disable debugging functionality before releasing to production. Password protecting your CEF application exe can be bypassed by users who know which arguments they should pass to the exe, which can enable users to bypass the security you put in place.&lt;/p&gt;
+&lt;p&gt;Take the example below where the self contained isolated non Steam version of the Launcher for SWTOR does not protect against remote debugging, enabling the ability to extract full source code of the Launcher, reverse engineer the native interop to the C++ dll and also being able to automate the usage of the desktop application with a WebDriver.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-C#"&gt;
+async Task Main()
+{	
+	// use 1Password CLI to extract item you need for logging in
+
+    var opCLI = &amp;#64;&amp;quot;C:\Users\patri\OneDrive\tools\op.exe&amp;quot;;
+    var args = &amp;quot;item get SWTOR --format json&amp;quot;;
+    var driverExeDir = &amp;#64;&amp;quot;C:\Users\patri\Downloads\chromedriver_win32&amp;quot;;
+    var cefClient = &amp;#64;&amp;quot;G:\Star Wars - The Old Republic\launcher.exe&amp;quot;;
+
+	using (var op = Process.Start(new ProcessStartInfo { FileName = opCLI, RedirectStandardOutput = true, Arguments = args }))
+	{
+		using(var document = JsonDocument.Parse(await op.StandardOutput.ReadToEndAsync()))
+		{
+			var items = document.RootElement
+                .GetProperty(&amp;quot;fields&amp;quot;)
+                .EnumerateArray()
+                .Where(x =&amp;gt; x.GetProperty(&amp;quot;id&amp;quot;).ValueEquals(&amp;quot;username&amp;quot;) || 
+                            x.GetProperty(&amp;quot;id&amp;quot;).ValueEquals(&amp;quot;password&amp;quot;) || 
+                            x.GetProperty(&amp;quot;type&amp;quot;).ValueEquals(&amp;quot;OTP&amp;quot;))
+                .ToArray();
+
+			var details = new
+			{
+				username = items[0].GetProperty(&amp;quot;value&amp;quot;).GetString(),
+				password = items[1].GetProperty(&amp;quot;value&amp;quot;).GetString(),
+				otp = items[2].GetProperty(&amp;quot;totp&amp;quot;).GetString(),
+			};
+
+			// Chrome/75.0.3770.100
+			// Download the Driver for the CEF client exe and configure additional arguments			
+			var options = new ChromeOptions() { LeaveBrowserRunning = true, BinaryLocation = cefClient };
+			options.AddArgument(&amp;quot;--debug&amp;quot;);
+			options.AddArgument(&amp;quot;--remote-debugging-port=9222&amp;quot;);
+			
+			using (IWebDriver driver = new ChromeDriver(driverExeDir, options))
+			{
+				// Use Chrome/Edge and inspect to find the right elements you need to automate and then apply this to your code				
+				driver.FindElement(By.XPath(&amp;quot;//*[&amp;#64;id=\&amp;quot;usernameInput\&amp;quot;]&amp;quot;)).Clear();				
+				driver.FindElement(By.XPath(&amp;quot;//*[&amp;#64;id=\&amp;quot;usernameInput\&amp;quot;]&amp;quot;)).SendKeys(details.username);
+				
+				driver.FindElement(By.XPath(&amp;quot;//*[&amp;#64;id=\&amp;quot;passwordInput\&amp;quot;]&amp;quot;)).SendKeys(details.password);
+				driver.FindElement(By.XPath(&amp;quot;//*[&amp;#64;name=\&amp;quot;securitykey\&amp;quot;]&amp;quot;)).SendKeys(details.otp);
+				
+				driver.FindElement(By.Id(&amp;quot;nextButton&amp;quot;)).Click();	
+				
+				await Task.Delay(1000);				
+				driver.FindElement(By.Id(&amp;quot;closeAlertsBtn&amp;quot;)).Click();				
+				await Task.Delay(2000);				
+				driver.FindElement(By.ClassName(&amp;quot;hitbox&amp;quot;)).Click();
+			}
+		}
+	}
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;It's important to ensure that you disable debugging functionality before releasing to production. Password protecting your CEF application exe can be bypassed by users who know which arguments they should pass to the exe, which can enable users to bypass the security you put in place.&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>/posts/2022-12-22-swtor-login-automation</id>
 		<title>SWTOR and Login Automation</title>
