@@ -12,8 +12,8 @@
 
   <link rel="canonical" href="/page/2">
 
-      <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
-      <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
+      <link type="application/rss+xml" rel="alternate" title="Patrick&#x27;s Blog" href="/feed.rss" />
+      <link type="application/atom+xml" rel="alternate" title="Patrick&#x27;s Blog" href="/feed.atom" />
 
   <meta name="application-name" content="Patrick&#x27;s Blog" />
   <meta name="msapplication-tooltip" content="Patrick&#x27;s Blog" />
@@ -64,19 +64,16 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/about">About me</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/bookmarks">Bookmarks</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/radar">Tech Radar</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="/posts">Posts</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/tags">Tags</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">About me</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/recommended">Recommended</a>
             </li>
 </ul>
     </div>
@@ -112,6 +109,13 @@
 
 
 <div class="post-preview">
+    <h2 class="post-title"><a href="/posts/2022-04-18-1password-and-ssh">1Password and SSH</a></h2>
+        <div class="post-subtitle">Securing your dev environment</div>
+    <p class="post-meta">Published on Monday, 18 April 2022</p>
+<p>I've been using a Password manager for years now, however one thing which always annnoyed me was the lack of SSH support and having your Private key stored in the .ssh folder on your machine. Or you would have to manually generate your SSH key using Putty. Then you would upload your public key and make sure you never lost your private key since it was always stored in the .ssh folder unless you backed it up securely and then would put it back on a fresh install.</p>        <p class="small"><a href="/posts/2022-04-18-1password-and-ssh">Read more...</a></p>
+</div>
+
+<div class="post-preview">
     <h2 class="post-title"><a href="/posts/2021-08-07-heroes-of-the-storm-d3js">Heroes of the Storm and D3.js</a></h2>
         <div class="post-subtitle">A hierarchical edge graph</div>
     <p class="post-meta">Published on Thursday, 08 July 2021</p>
@@ -123,12 +127,6 @@ There are 3 lanes on the map and the goal is to kill their core before they kill
     <h2 class="post-title"><a href="/posts/2020-02-17-blazor-and-svg-files-part-2">Blazor &amp; SVG files - Part 2</a></h2>
     <p class="post-meta">Published on Monday, 17 February 2020</p>
 <p>It's been a while since my last blog post about Blazor.  My original blog post was showing how to use Blazer client side only with SVG files, by requesting those images using a http client from the browser and getting the content from the wwwroot.</p>        <p class="small"><a href="/posts/2020-02-17-blazor-and-svg-files-part-2">Read more...</a></p>
-</div>
-
-<div class="post-preview">
-    <h2 class="post-title"><a href="/posts/2019-03-19-blazor-and-svg-files-part-1">Blazor &amp; SVG files - Part 1</a></h2>
-    <p class="post-meta">Published on Tuesday, 19 March 2019</p>
-<p>I've been experimenting with Blazor and using Bootstrap with SVG's. For Angular I remember that the Material design library had a really nice way of being able to pull in SVG files but this doesn't quite yet exist for blazor.</p>        <p class="small"><a href="/posts/2019-03-19-blazor-and-svg-files-part-1">Read more...</a></p>
 </div>
     <div>
         <div class="float-sm-left">
@@ -150,10 +148,10 @@ There are 3 lanes on the map and the goal is to kill their core before they kill
                             <a href="/tags/mmorpg" class="badge badge-light"> MMORPG (2)</a>
                             <a href="/tags/blazor" class="badge badge-light"> Blazor (2)</a>
                             <a href="/tags/svg-files" class="badge badge-light"> SVG Files (2)</a>
-                            <a href="/tags/cef" class="badge badge-light"> CEF (1)</a>
-                            <a href="/tags/chrome-debugger" class="badge badge-light"> Chrome Debugger (1)</a>
-                            <a href="/tags/ssh" class="badge badge-light"> SSH (1)</a>
-                            <a href="/tags/javascript" class="badge badge-light"> Javascript (1)</a>
+                            <a href="/tags/docker" class="badge badge-light"> Docker (1)</a>
+                            <a href="/tags/cicd" class="badge badge-light"> CICD (1)</a>
+                            <a href="/tags/dagger" class="badge badge-light"> Dagger (1)</a>
+                            <a href="/tags/github-actions" class="badge badge-light"> Github Actions (1)</a>
                         <div class="mt-3">
                             <div class="float-sm-right">
                                 <a class="btn btn-sm btn-primary" href="/tags" role="button">All Tags <i class="fas fa-angle-double-right"></i></a>
