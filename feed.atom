@@ -7,7 +7,7 @@
 	</author>
 	<link rel="self" href="/" />
 	<rights>Copyright © 2024</rights>
-	<updated>2024-06-09T17:03:17Z</updated>
+	<updated>2024-06-09T17:14:22Z</updated>
 	<entry>
 		<id>/posts/2024-06-04-portable-cicd-with-dagger</id>
 		<title>Portable CI/CD with Dagger</title>
