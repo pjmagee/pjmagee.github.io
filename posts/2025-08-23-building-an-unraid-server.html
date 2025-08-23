@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Patrick Magee">
+
+  <title>Patrick&#x27;s Blog - My Home Server Setup</title>
+
+  <link rel="canonical" href="/posts/2025-08-23-building-an-unraid-server">
+
+      <link type="application/rss+xml" rel="alternate" title="Patrick&#x27;s Blog" href="/feed.rss" />
+      <link type="application/atom+xml" rel="alternate" title="Patrick&#x27;s Blog" href="/feed.atom" />
+
+  <meta name="application-name" content="Patrick&#x27;s Blog" />
+  <meta name="msapplication-tooltip" content="Patrick&#x27;s Blog" />
+  <meta name="msapplication-starturl" content="/" />
+  <meta property="og:title" content="Patrick&#x27;s Blog - My Home Server Setup" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="/posts/2025-08-23-building-an-unraid-server" />
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/scss/bootstrap.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/brands.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css' data-no-mirror>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' data-no-mirror>
+
+  <!-- Custom styles for this template -->
+  <link href="/scss/clean-blog.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/plugins/autoloader/prism-autoloader.min.js" data-no-mirror></script>
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism.css">
+
+  <!-- Lunr search -->
+
+  
+
+
+  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Patrick&#x27;s Blog</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/posts">Posts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/tags">Tags</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">About me</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/recommended">Recommended</a>
+            </li>
+</ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Page Header -->
+  <header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="post-heading">
+          <h1>
+            My Home Server Setup
+          </h1>
+            <h2 class="subheading">A deep dive into building a powerful home server for VMs, Docker, game servers, and local AI workflows&#x2014;covering hardware choices, software, and lessons learned.</h2>
+              <div class="meta">Published on Saturday, 23 August 2025</div>
+                <div class="mt-3">
+                      <a href="/tags/docker" class="badge badge-light"> Docker</a>
+                      <a href="/tags/unraid" class="badge badge-light"> Unraid</a>
+                      <a href="/tags/home-lab" class="badge badge-light"> Home Lab</a>
+                      <a href="/tags/ai" class="badge badge-light"> AI</a>
+                      <a href="/tags/kubernetes" class="badge badge-light"> Kubernetes</a>
+                      <a href="/tags/plex" class="badge badge-light"> Plex</a>
+                      <a href="/tags/zfs" class="badge badge-light"> ZFS</a>
+                      <a href="/tags/networking" class="badge badge-light"> Networking</a>
+                      <a href="/tags/game-servers" class="badge badge-light"> Game Servers</a>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div id="content" class="col-md-12">
+        <h1 id="my-home-server-setup">My Home Server Setup</h1>
+<p><strong>Hardware, Configuration, and Lessons Learned</strong>:</p>
+<p>Welcome to my latest blog post where I dive into the details of my home server setup, a beast of a machine that powers everything from virtual machines (VMs) and Docker containers to game servers and local AI workflows. This setup is the culmination of careful hardware selection, strategic cost-saving purchases, software tinkering, and some hard-learned lessons. If you're a home lab enthusiast or just curious about building a powerful server, read on for the full breakdown.</p>
+<h2 id="hardware-breakdown">Hardware Breakdown</h2>
+<p><strong>CPU</strong>: Intel Core i9-285K</p>
+<p>The heart of my setup is the Intel Core i9-285K with its integrated GPU (iGPU) and QuickSync capabilities. This processor is a powerhouse for transcoding tasks, especially for media streaming via Plex. The Neural Processing Unit (NPU) caught my eye for potential AI workloads, but as of now, it feels like a gimmick due to limited Linux support. I'm keeping an eye on future developments, but for now, the iGPU handles light AI tasks admirably with Intel-IPEX-LLM-Ollama.</p>
+<p><strong>Memory</strong>: 98GB RAM</p>
+<p>With 98GB of RAM, this server is built to handle multiple VMs, Docker containers, local large language models (LLMs), and game servers like ARK and Minecraft. The generous memory allocation ensures smooth multitasking, whether I'm running Kubernetes clusters for my home lab or hosting AI workflows with n8n and locally trained models with tool-calling capabilities.</p>
+<p><strong>Cooling</strong>: MSI MEG CORELIQUID S360 AIO &amp; ARCTIC P14 Pro PST Fans</p>
+<p>Cooling is handled by the MSI MEG CORELIQUID S360 AIO CPU Liquid Cooler, featuring a 2.4&quot; IPS display, a 7th Gen Asetek pump, a VRM fan, and three Silent Gale P12 fans. The evaporation-proof tubing and compatibility with both AMD and Intel platforms make it a solid choice. However, a major annoyance is the lack of official MSI software for Linux to control the AIO's display. I worked around this by setting up a Windows VM with USB passthrough to configure the CPU screen, but the temperature readings are inaccurate (e.g., showing 0°C). Additionally, I use four ARCTIC P14 Pro PST fans for excellent airflow throughout the case.</p>
+<p><strong>Case</strong>: Phanteks Enthoo Pro 2 Server Big-Tower</p>
+<p>The Phanteks Enthoo Pro 2 is a sleek, spacious tower with ample room for storage and GPU expansion. Its design is perfect for a server setup, offering flexibility for multiple drives and clean cable management. This case strikes a balance between aesthetics and functionality, making it a joy to work with.</p>
+<p><strong>Motherboard</strong>: MSI PRO Z890-P WIFI</p>
+<p>The MSI PRO Z890-P WIFI motherboard supports Intel Core Ultra Processors (Series 2) with an LGA 1851 socket. It features a 55A DrMOS power stage, DDR5 memory boost up to 9200+ MT/s (OC), PCIe 5.0 and 4.0 slots, M.2 Gen5 support, Wi-Fi 7, and 5G LAN. It's a mid-range board that's not too expensive but capable of overclocking if needed, making it a great fit for my needs.</p>
+<p><strong>Storage</strong>: Crucial BX500 SATA SSDs &amp; NVMe Drives</p>
+<p>Storage is a critical component of my setup, and I managed to cut costs by snagging a great deal on eBay for opened-but-new 4TB Crucial BX500 SATA SSDs. Here's the breakdown:</p>
+<p><strong>4x 4TB Crucial BX500 SATA SSDs</strong>: These were sourced from eBay at a significant discount despite being brand new, just opened. They're configured in a ZFS RAIDZ1 pool for 1-drive failure protection, leveraging the four SATA ports on the Z890 motherboard. Each SSD offers up to 540MB/s read speeds, making them ideal for my needs.</p>
+<p><strong>2x 4TB NVMe Gen4 Drives</strong>: These serve as a high-speed cache layer for applications, significantly boosting performance for Docker containers and VMs. This setup, combined with UnraidOS, provides a robust and flexible storage solution for my home server.</p>
+<p><strong>GPU</strong>: NVIDIA RTX 3090</p>
+<p>I scored another cost-saving win with a cheap NVIDIA RTX 3090 (24GB VRAM) from eBay. This GPU is a beast for running 8B+ parameter local AI models, handling computationally intensive tasks like model training and inference with ease. Buying it used but in excellent condition helped keep the budget in check while still delivering top-tier performance.</p>
+<h2 id="software-and-use-cases">Software and Use Cases</h2>
+<p><strong>Operating System</strong>: UnraidOS</p>
+<p>UnraidOS manages my non-array SSD/NVMe storage, providing a user-friendly interface for my home server. I initially tried using Unraid's array setting with a cache and parity drive for 1-drive failure protection, but this was a disaster for SSD performance. The array configuration throttled speeds to a measly 30MB/s and caused OS and networking issues with streaming, FTP, and other activities. After days of troubleshooting, I switched to an SSD pool with ZFS, which resolved the performance bottlenecks and restored smooth operation.</p>
+<h2 id="services-and-workflows">Services and Workflows</h2>
+<p><strong>Media Streaming</strong>: Plex runs flawlessly, leveraging the i9's QuickSync for efficient transcoding.</p>
+<p><strong>Game Servers</strong>: I'm currently running an ARK server in a Windows VM with 2 pinned CPUs and 4GB of RAM, which performs perfectly for 1-5 players. Additionally, I host Abiotic Factor and Minecraft servers via Docker containers. Thanks to <a href="https://forums.unraid.net/topic/79530-support-ich777-gameserver-dockers/">https://forums.unraid.net/topic/79530-support-ich777-gameserver-dockers/</a></p>
+<p><strong>Kubernetes (K8s)</strong>: My home lab includes multi-node Kubernetes VMs for experimentation and learning.</p>
+<p><strong>Networking</strong>: I use Traefik and Cloudflare Tunnel for select services. To bypass my ISP's <a href="https://en.wikipedia.org/wiki/Carrier-grade_NAT">CGNAT</a>, I opted for a static IP (a small add-on to my internet package), allowing me to route traffic on different public ports while my router redirects to internal ports. This setup enables multiple game servers to run on their default internal ports without conflicts.</p>
+<p><strong>AI Workflows</strong>: I run local AI workflows using n8n with locally trained models that support tool calling. The i9's iGPU handles lighter workloads via Intel-IPEX-LLM-Ollama, while the RTX 3090 powers heavier tasks.</p>
+<p><strong>Dagger Portable Workflows</strong>: I use <a href="https://dagger.io/">Dagger</a> to run portable CI/CD workflows across my home lab. To set up the Dagger Engine on my server, I run:</p>
+<pre><code class="language-bash">dagger engine --addr tcp://0.0.0.0:1234
+</code></pre>
+<p>On my other client devices, I connect to the server by setting the environ    ment variable:</p>
+<pre><code class="language-bash">_EXPERIMENTAL_DAGGER_RUNNER_HOST=&quot;tcp://[SERVER_IP]:1234&quot;
+</code></pre>
+<p>This allows me to run workflows remotely and leverage my server's hardware, including GPU devices for LLM tasks. Dagger natively supports GPU mounting, making it ideal for AI workflows and distributed builds. While official documentation is sparse on TCP setups, this method works reliably for internal networks.</p>
+<h2 id="challenges-and-lessons-learned">Challenges and Lessons Learned</h2>
+<p>Building this server wasn't without its hurdles. Here are the key challenges I faced and how I overcame them:</p>
+<h3 id="unraid-array-misstep">Unraid Array Misstep</h3>
+<p>As mentioned, my first attempt at configuring Unraid's array with SSDs was a disaster. The cache and parity setup absolutely tanked SSD performance—speeds dropped to just 30MB/s, and the whole system became unstable, with streaming and network services constantly failing. After a lot of digging, I discovered an old Unraid patch note and a super helpful blog post (<a href="https://www.spxlabs.com/blog/2020/11/27/ssd-parity-vs-hdd-parity-vs-ssd-array-in-unraid">SSD Parity vs HDD Parity vs SSD Array in Unraid</a>) that explained why SSDs struggle in traditional array configurations. The solution was to switch to an SSD pool with ZFS, which instantly restored performance and reliability. If you're building a similar setup, skip the array for SSDs and go straight to ZFS pools—you'll save yourself days of frustration.</p>
+<h3 id="networking-and-cgnat">Networking and CGNAT</h3>
+<p>Being behind my ISP's CGNAT posed significant challenges for external access to my services. Cloudflare Tunnel helped for some services, but for others (like game servers), tunneling wasn't ideal. I contacted my ISP and paid a small fee for a static IP, which eliminated CGNAT issues and simplified my networking setup.</p>
+<h3 id="cooling-clearance-issues">Cooling Clearance Issues</h3>
+<p>Despite using PCPartPicker to verify compatibility, the ARCTIC Liquid Freezer III Pro 420 did not fit in my Phanteks Enthoo Pro 2 case. This was a frustrating oversight, as PCPartPicker's compatibility checker failed me. I ended up sticking with the MSI MEG CORELIQUID S360, but this experience taught me not to blindly trust compatibility tools. Always double-check physical dimensions and clearances!</p>
+<h2 id="final-thoughts">Final Thoughts</h2>
+<p>This server is a dream setup for my home lab, media streaming, gaming, and AI experimentation. By scoring deals on opened-but-new Crucial BX500 SSDs and a used RTX 3090 from eBay, I kept costs down without sacrificing performance. The combination of powerful hardware, flexible software, and a few hard-learned lessons has resulted in a robust and versatile system. If you're planning a similar build, my biggest advice is to thoroughly research storage configurations (especially with Unraid and SSDs), verify hardware compatibility manually, and be prepared to tackle networking challenges if you're behind CGNAT.</p>
+<p>Feel free to share your own home server experiences or ask questions in the comments below. Happy building!</p>
+
+<div class="comments">
+    <div id="disqus_thread"></div>
+    <script>
+        /**
+        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+        /*
+        var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://' + 'pjmagee-github-io' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+        <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright text-muted m-0">Copyright &#xA9; 2025</p>
+                    <br />
+                    <ul class="list-inline text-center small">
+                            <li class="list-inline-item">
+                                <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="/feed.atom"><i class="fa fa-square-rss"></i> Atom Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="http://stackoverflow.com/users/935280/patrick-magee"><i class="fa-brands fa-stack-overflow"></i> Stack Overflow</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://www.linkedin.com/in/patrick-magee-76216959"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://github.com/pjmagee"><i class="fa-brands fa-github-square"></i> GitHub</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://twitter.com/PatrickMageez"><i class="fa-brands fa-twitter-square"></i> Twitter</a>
+                            </li>
+                    </ul>
+                    <br />
+                    <div class="font-weight-bold small"><a href="https://statiq.dev">Generated by Statiq</a></div>
+                </div>
+        </div>
+    </div>
+</footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  
+<script>
+       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-51533669-1', 'auto');
+		ga('send', 'pageview', {
+		  'page': '<a href="/posts/2025-08-23-building-an-unraid-server">My Home Server Setup</a>',
+		  'title': 'Patrick&#x27;s Blog - My Home Server Setup'
+		});
+</script>
+
+
+  
+
+  <!-- Custom scripts for this template -->
+  <script src="/js/clean-blog.js"></script>
+
+</body>
+
+</html>
