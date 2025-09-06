@@ -6,8 +6,214 @@
 		<description />
 		<copyright>Copyright © 2025</copyright>
 		<managingEditor>Patrick Magee</managingEditor>
-		<pubDate>Sat, 23 Aug 2025 23:05:31 GMT</pubDate>
-		<lastBuildDate>Sat, 23 Aug 2025 23:05:31 GMT</lastBuildDate>
+		<pubDate>Sat, 06 Sep 2025 14:14:47 GMT</pubDate>
+		<lastBuildDate>Sat, 06 Sep 2025 14:14:47 GMT</lastBuildDate>
+		<item>
+			<title>My Codec &amp; Transcoding Journey</title>
+			<link>/posts/2025-09-06-unraid-plex-codec-transcoding-journey</link>
+			<description>&lt;p&gt;Over the past months I dove deep into media formats, hardware encoders, open vs licensed codecs, storage efficiency and how to orchestrate all of it on Unraid with Plex and Unmanic. This is the distilled narrative—what worked, what hurt, and what I’m optimizing toward.&lt;/p&gt;</description>
+			<author>Patrick Magee</author>
+			<guid isPermaLink="false">/posts/2025-09-06-unraid-plex-codec-transcoding-journey</guid>
+			<pubDate>Sat, 06 Sep 2025 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="unraid-plex-codecs-compression-a-practical-journey"&gt;Unraid, Plex, Codecs &amp;amp; Compression: A Practical Journey&lt;/h1&gt;
+&lt;p&gt;Over the past months I dove deep into media formats, hardware encoders, open vs licensed codecs, storage efficiency and how to orchestrate all of it on Unraid with Plex and Unmanic. This is the distilled narrative—what worked, what hurt, and what I’m optimizing toward.&lt;/p&gt;
+&lt;h2 id="the-starting-point"&gt;1. The Starting Point&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Tens of thousands of mixed‑source video files (inconsistent containers, bitrates, color spaces, audio tracks)&lt;/li&gt;
+&lt;li&gt;Goal: Cut storage without visible quality loss while increasing direct‑play success across very mixed devices&lt;/li&gt;
+&lt;li&gt;Constraint: A grab‑bag of clients (older TVs, phones, SDR‑only panels, a few HDR10 sets, and just a couple of AV1‑capable devices)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="standards-vs-implementations"&gt;2. Standards vs Implementations&lt;/h2&gt;
+&lt;p&gt;Early on I kept bouncing between wikis, forum threads and ffmpeg docs just to decode people’s shorthand. Eventually it clicked: a &lt;em&gt;spec&lt;/em&gt; (H.264/AVC, H.265/HEVC, AV1) is the published standard; &lt;em&gt;implementations&lt;/em&gt; are the real-world encoders and decoders (ffmpeg builds, NVENC firmware generations, Intel Quick Sync versions, software encoders like libx265 or SVT‑AV1). They differ in speed, efficiency and feature completeness.&lt;/p&gt;
+&lt;h3 id="eli5-glossary-what-i-wish-i-had-on-day-one"&gt;ELI5 Glossary (What I Wish I Had On Day One)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Codec: The compression method spec (e.g. H.264, HEVC, AV1, AAC).&lt;/li&gt;
+&lt;li&gt;Encoding: Creating a compressed file from raw (or less‑compressed) source.&lt;/li&gt;
+&lt;li&gt;Transcoding: Re‑encoding an existing file into a different codec, profile, bitrate or container (always risks some quality loss if the video stream is recompressed).&lt;/li&gt;
+&lt;li&gt;Container / Format: The wrapper that holds video, audio, subtitles, metadata (MKV, MP4, MOV). Changing the container alone doesn’t affect quality.&lt;/li&gt;
+&lt;li&gt;Profile / Level: Capability tiers inside a codec (e.g. Main10, Dolby Vision enhancement layers). Some devices only support a subset.&lt;/li&gt;
+&lt;li&gt;Video Dynamic Range: SDR vs HDR10 vs Dolby Vision—how brightness &amp;amp; color are represented. Unsupported formats → washed out or crushed image.&lt;/li&gt;
+&lt;li&gt;Standard vs Implementation: “HEVC” is the standard; NVENC HEVC, Quick Sync HEVC, libx265 are separate implementations with different trade‑offs.&lt;/li&gt;
+&lt;li&gt;Hardware Encoder: Fixed‑function block on GPU/iGPU (NVENC, Quick Sync) — fast, predictable, “good enough” quality per bitrate.&lt;/li&gt;
+&lt;li&gt;Software Encoder: CPU / compute based (libx265 slow presets, SVT‑AV1) — slower but can squeeze more quality at a given bitrate.&lt;/li&gt;
+&lt;li&gt;Quality Loss: Artifacts introduced by lossy re‑encoding (banding, blockiness, mushy detail). Fewer passes = fewer risks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Once these clicked, the rest became pattern matching: choose the codec that balances compatibility + size, pick the implementation that’s fast enough, avoid unnecessary passes.&lt;/p&gt;
+&lt;h2 id="hardware-inventory-capabilities"&gt;3. Hardware Inventory &amp;amp; Capabilities&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Hardware&lt;/th&gt;
+&lt;th&gt;Strength&lt;/th&gt;
+&lt;th&gt;Limitation&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;NVIDIA RTX 3090&lt;/td&gt;
+&lt;td&gt;Fast H.264 + HEVC (NVENC) batch work; low CPU usage&lt;/td&gt;
+&lt;td&gt;No AV1 encode (decode only)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Intel i9 iGPU (Quick Sync)&lt;/td&gt;
+&lt;td&gt;AV1 encode support; efficient for trickle jobs&lt;/td&gt;
+&lt;td&gt;Slower per file than 3090 for HEVC&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;CPU (software encoders)&lt;/td&gt;
+&lt;td&gt;Highest potential quality at slow presets&lt;/td&gt;
+&lt;td&gt;Too slow &amp;amp; power hungry for the backlog&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Strategy: Let the 3090 chew through obvious H.264 → HEVC conversions; park “high‑value” titles in a future AV1 queue for the iGPU (or upgraded hardware) once the easy storage wins are done.&lt;/p&gt;
+&lt;h2 id="codec-trade-offs-practical-view"&gt;4. Codec Trade-offs (Practical View)&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;H.264 (AVC): Universally compatible baseline; least efficient of the modern trio. (See: &lt;a href="https://en.wikipedia.org/wiki/Advanced_Video_Coding"&gt;AVC&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;HEVC (H.265): ~25–50% bitrate reduction versus AVC at similar perceived quality; wide hardware decode; licensing baggage. (&lt;a href="https://en.wikipedia.org/wiki/High_Efficiency_Video_Coding"&gt;HEVC&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;AV1: Royalty‑free; strong compression efficiency; encode speed improving; hardware decode/encode adoption still ramping. (&lt;a href="https://en.wikipedia.org/wiki/AV1"&gt;AV1&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;AAC: Successor to MP3; better quality at the same bitrate; widely supported—simplifies mixed device playback. (&lt;a href="https://en.wikipedia.org/wiki/Advanced_Audio_Coding"&gt;AAC&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="licensing-why-some-things-dont-transcode"&gt;5. Licensing &amp;amp; Why Some Things Don’t Transcode&lt;/h2&gt;
+&lt;p&gt;Plex may fall back or refuse certain transcodes when patent‑encumbered codecs or profiles appear and a valid path (hardware + software stack) isn’t present. AV1’s royalty‑free status makes it the &lt;em&gt;future‑proof&lt;/em&gt; target for archival lanes. HEVC remains a pragmatic middle ground today given my 3090 throughput.&lt;/p&gt;
+&lt;h2 id="how-i-actually-run-it-simplified"&gt;6. How I Actually Run It (Simplified)&lt;/h2&gt;
+&lt;p&gt;I ended up ditching over‑engineering. I have &lt;em&gt;two&lt;/em&gt; main working library lanes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;HEVC Lane: Anything still bloated in H.264 or obviously wasteful → NVENC HEVC pass.&lt;/li&gt;
+&lt;li&gt;AV1 Lane (tagged queue): High‑value / long‑term stuff I’ll slowly convert with Quick Sync (or future GPU) when idle.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Automation: Unmanic detects candidates and launches the right worker. Each worker is tagged (HEVC or AV1). I still eyeball edge cases to avoid silent junk.&lt;/p&gt;
+&lt;p&gt;Audio: Standardise to AAC unless there’s a &lt;em&gt;clear&lt;/em&gt; reason to keep a lossless or multi‑track original (rare). Simplicity wins.&lt;/p&gt;
+&lt;p&gt;Quality Guardrails:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CRF/quality‑targeted encodes, not rigid bitrates.&lt;/li&gt;
+&lt;li&gt;Occasional metrics only if something looks off (no over‑instrumentation).&lt;/li&gt;
+&lt;li&gt;One conversion per asset—avoid “transcode churn”.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;That’s it. No sprawling pipeline graph—just staged queues and hardware matched to the job.&lt;/p&gt;
+&lt;h2 id="notes-on-tweaks"&gt;7. Notes on Tweaks&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Start small → validate → scale.&lt;/li&gt;
+&lt;li&gt;Pair hardware decode with hardware encode—frees CPU.&lt;/li&gt;
+&lt;li&gt;Maintain a tiny “needs review” pile to keep quality honest.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="storage-wins"&gt;8. Storage Wins&lt;/h2&gt;
+&lt;p&gt;After targeted HEVC conversions plus audio clean‑up I’ve reclaimed 500+ GB with no &lt;em&gt;visible&lt;/em&gt; quality loss (living‑room subjective checks + a few spot VMAF/SSIM comparisons). Biggest wins: over‑provisioned H.264 TV episodes and redundant multi‑track audio.&lt;/p&gt;
+&lt;h2 id="hdr-dolby-vision-confusion"&gt;9. HDR / Dolby Vision Confusion&lt;/h2&gt;
+&lt;p&gt;Reality: Dolby Vision files with an HDR10 fallback &lt;em&gt;usually&lt;/em&gt; behaved—but sometimes I’d get dim scenes or weird oversaturation. Hard to tell if it was the file, tone mapping, or the display with HDR disabled to save power. Dolby Vision uses dynamic per‑scene metadata; HDR10 is static. If the chain mishandles that, colors drift. (Refs: &lt;a href="https://en.wikipedia.org/wiki/Dolby_Vision"&gt;Dolby Vision&lt;/a&gt;, &lt;a href="https://en.wikipedia.org/wiki/HDR10"&gt;HDR10&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;I’m not chasing cinematic color science perfection. I just want stuff to look normal everywhere. So the rule now:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Prefer clean SDR or plain HDR10 sources.&lt;/li&gt;
+&lt;li&gt;Avoid niche DV variants unless &lt;em&gt;all&lt;/em&gt; primary devices benefit.&lt;/li&gt;
+&lt;li&gt;If a file constantly causes color weirdness → replace/remux/re‑encode it into something boring and compatible.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Result: Less time squinting at gradients; more time actually watching.&lt;/p&gt;
+&lt;h2 id="direct-play-clever-transcoding"&gt;10. Direct Play &amp;gt; Clever Transcoding&lt;/h2&gt;
+&lt;p&gt;If Plex can just hand the file to the device unchanged, everybody’s happier. Less server load, less delay, fewer “why is it buffering?” pings. If someone’s watching on a 9‑year‑old bargain TV that can’t handle it—I’m not rebuilding the library for that edge. Upgrade the device.&lt;/p&gt;
+&lt;h2 id="hardware-quirks"&gt;11. Hardware Quirks&lt;/h2&gt;
+&lt;p&gt;The 3090 is a gaming beast, but NVENC is still a single fixed block—so simultaneous encode throughput isn’t infinite. Meanwhile the iGPU happily churns a couple of AV1 jobs. Lesson: raw GPU size ≠ unlimited encode lanes.&lt;/p&gt;
+&lt;p&gt;Takeaways:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Don’t assume “huge GPU = infinite transcodes”.&lt;/li&gt;
+&lt;li&gt;Stagger HEVC jobs; park AV1 on the iGPU when I’m not using it.&lt;/li&gt;
+&lt;li&gt;Balance matters more than theoretical peak charts.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="slow-selective-av1-adoption"&gt;12. Slow &amp;amp; Selective AV1 Adoption&lt;/h2&gt;
+&lt;p&gt;Not rushing a full AV1 flip because:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Time sink for marginal additional savings on already efficient HEVC.&lt;/li&gt;
+&lt;li&gt;Tooling + hardware encode speed still improving.&lt;/li&gt;
+&lt;li&gt;Library hygiene first; perfection later.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So: gradual, high‑value targets only. The rest waits.&lt;/p&gt;
+&lt;h2 id="decision-matrix"&gt;13. Decision Matrix&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Source&lt;/th&gt;
+&lt;th&gt;Action Now&lt;/th&gt;
+&lt;th&gt;Future Action&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;High bitrate H.264 1080p&lt;/td&gt;
+&lt;td&gt;Transcode → HEVC&lt;/td&gt;
+&lt;td&gt;Maybe AV1 (archive tier)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Low bitrate H.264 TV rip&lt;/td&gt;
+&lt;td&gt;Leave (diminishing returns)&lt;/td&gt;
+&lt;td&gt;Skip&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4K HEVC high bitrate&lt;/td&gt;
+&lt;td&gt;Evaluate; maybe CRF re‑encode&lt;/td&gt;
+&lt;td&gt;Possible AV1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Animated content&lt;/td&gt;
+&lt;td&gt;Queue HEVC (good gains)&lt;/td&gt;
+&lt;td&gt;High AV1 potential later&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Niche / weird profile&lt;/td&gt;
+&lt;td&gt;Manual review&lt;/td&gt;
+&lt;td&gt;Normalize container&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="audio-rationalisation"&gt;14. Audio Rationalisation&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Convert scattered AC3/DTS to AAC where safe for broad compatibility + modest size savings.&lt;/li&gt;
+&lt;li&gt;Keep original lossless only for genuinely premium titles (not everything needs archival audio).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="tooling-mentions"&gt;15. Tooling Mentions&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Unraid: Flexible disk layout.&lt;/li&gt;
+&lt;li&gt;Plex: Unified streaming &amp;amp; client intelligence.&lt;/li&gt;
+&lt;li&gt;Unmanic: Automation glue + plugin ecosystem.&lt;/li&gt;
+&lt;li&gt;ffmpeg: The workhorse under the hood.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="key-lessons"&gt;16. Key Lessons&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Organise before mass convert.&lt;/li&gt;
+&lt;li&gt;Split libraries by &lt;em&gt;intent&lt;/em&gt;, not just genre.&lt;/li&gt;
+&lt;li&gt;Use the hardware you already own before shopping upgrades.&lt;/li&gt;
+&lt;li&gt;Track savings (or you’re guessing).&lt;/li&gt;
+&lt;li&gt;Avoid transcoding HDR unless necessary.&lt;/li&gt;
+&lt;li&gt;Stage AV1 adoption; no big‑bang rewrite.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="whats-next"&gt;17. What’s Next&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Finish converting the obviously bloated H.264 backlog to HEVC.&lt;/li&gt;
+&lt;li&gt;Run a small AV1 pilot batch (favourites) and measure real gain vs time.&lt;/li&gt;
+&lt;li&gt;Script a lightweight report: space saved / day + direct play %.&lt;/li&gt;
+&lt;li&gt;Revisit broader AV1 rollout after backlog stabilises.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="outcome-operating-principles"&gt;18. Outcome &amp;amp; Operating Principles&lt;/h2&gt;
+&lt;p&gt;My focus evolved from “compress everything” to delivering a consistent, low‑friction viewing experience for anyone hitting the server—while silently reclaiming space. The practical pillars now:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Seamless playback first: maximise direct play across common TVs, tablets, phones.&lt;/li&gt;
+&lt;li&gt;Measured compression: change it only when objective bloat or no visible delta justifies the time.&lt;/li&gt;
+&lt;li&gt;Codec uniformity: converge on HEVC now; introduce AV1 gradually; standardise audio on AAC. (&lt;a href="https://en.wikipedia.org/wiki/High_Efficiency_Video_Coding"&gt;HEVC&lt;/a&gt; / &lt;a href="https://en.wikipedia.org/wiki/AV1"&gt;AV1&lt;/a&gt; / &lt;a href="https://en.wikipedia.org/wiki/Advanced_Audio_Coding"&gt;AAC&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Profile pragmatism: drop exotic HDR layers that add support headaches; clean HDR10 or SDR is fine. (&lt;a href="https://en.wikipedia.org/wiki/Dolby_Vision"&gt;Dolby Vision&lt;/a&gt; / &lt;a href="https://en.wikipedia.org/wiki/HDR10"&gt;HDR10&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Quality rescue: fix the small set of clearly bad encodes once—don’t churn them repeatedly.&lt;/li&gt;
+&lt;li&gt;Storage efficiency: treat GB saved per hour as a guiding metric.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;In short: optimise for direct play, normalise selectively, and let measured savings drive the next pass.&lt;/p&gt;
+&lt;h2 id="references"&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;AV1 – &lt;a href="https://en.wikipedia.org/wiki/AV1"&gt;https://en.wikipedia.org/wiki/AV1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;HEVC – &lt;a href="https://en.wikipedia.org/wiki/High_Efficiency_Video_Coding"&gt;https://en.wikipedia.org/wiki/High_Efficiency_Video_Coding&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;AVC (H.264) – &lt;a href="https://en.wikipedia.org/wiki/Advanced_Video_Coding"&gt;https://en.wikipedia.org/wiki/Advanced_Video_Coding&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Dolby Vision – &lt;a href="https://en.wikipedia.org/wiki/Dolby_Vision"&gt;https://en.wikipedia.org/wiki/Dolby_Vision&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;HDR10 – &lt;a href="https://en.wikipedia.org/wiki/HDR10"&gt;https://en.wikipedia.org/wiki/HDR10&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;AAC – &lt;a href="https://en.wikipedia.org/wiki/Advanced_Audio_Coding"&gt;https://en.wikipedia.org/wiki/Advanced_Audio_Coding&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 		<item>
 			<title>My Home Server Setup</title>
 			<link>/posts/2025-08-23-building-an-unraid-server</link>

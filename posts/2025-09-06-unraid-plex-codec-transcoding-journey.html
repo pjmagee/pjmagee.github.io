@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Patrick Magee">
+
+  <title>Patrick&#x27;s Blog - My Codec &amp; Transcoding Journey</title>
+
+  <link rel="canonical" href="/posts/2025-09-06-unraid-plex-codec-transcoding-journey">
+
+      <link type="application/rss+xml" rel="alternate" title="Patrick&#x27;s Blog" href="/feed.rss" />
+      <link type="application/atom+xml" rel="alternate" title="Patrick&#x27;s Blog" href="/feed.atom" />
+
+  <meta name="application-name" content="Patrick&#x27;s Blog" />
+  <meta name="msapplication-tooltip" content="Patrick&#x27;s Blog" />
+  <meta name="msapplication-starturl" content="/" />
+  <meta property="og:title" content="Patrick&#x27;s Blog - My Codec &amp; Transcoding Journey" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="/posts/2025-09-06-unraid-plex-codec-transcoding-journey" />
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/scss/bootstrap.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/brands.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css' data-no-mirror>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' data-no-mirror>
+
+  <!-- Custom styles for this template -->
+  <link href="/scss/clean-blog.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/plugins/autoloader/prism-autoloader.min.js" data-no-mirror></script>
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism.css">
+
+  <!-- Lunr search -->
+
+  
+
+
+  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Patrick&#x27;s Blog</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/about">About me</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/recommended">Recommended</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/posts">Posts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/tags">Tags</a>
+            </li>
+</ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Page Header -->
+  <header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="post-heading">
+          <h1>
+            My Codec &amp; Transcoding Journey
+          </h1>
+            <h2 class="subheading">Building an efficient multi&#x2011;codec media workflow with Unraid, Plex, NVENC, Quick Sync, Unmanic &amp; strategic library planning</h2>
+              <div class="meta">Published on Saturday, 06 September 2025</div>
+                <div class="mt-3">
+                      <a href="/tags/unraid" class="badge badge-light"> Unraid</a>
+                      <a href="/tags/plex" class="badge badge-light"> Plex</a>
+                      <a href="/tags/av1" class="badge badge-light"> AV1</a>
+                      <a href="/tags/hevc" class="badge badge-light"> HEVC</a>
+                      <a href="/tags/transcoding" class="badge badge-light"> Transcoding</a>
+                      <a href="/tags/nvenc" class="badge badge-light"> NVENC</a>
+                      <a href="/tags/quick-sync" class="badge badge-light"> Quick Sync</a>
+                      <a href="/tags/media-server" class="badge badge-light"> Media Server</a>
+                      <a href="/tags/compression" class="badge badge-light"> Compression</a>
+                      <a href="/tags/storage" class="badge badge-light"> Storage</a>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div id="content" class="col-md-12">
+        <h1 id="unraid-plex-codecs-compression-a-practical-journey">Unraid, Plex, Codecs &amp; Compression: A Practical Journey</h1>
+<p>Over the past months I dove deep into media formats, hardware encoders, open vs licensed codecs, storage efficiency and how to orchestrate all of it on Unraid with Plex and Unmanic. This is the distilled narrative—what worked, what hurt, and what I’m optimizing toward.</p>
+<h2 id="the-starting-point">1. The Starting Point</h2>
+<ul>
+<li>Tens of thousands of mixed‑source video files (inconsistent containers, bitrates, color spaces, audio tracks)</li>
+<li>Goal: Cut storage without visible quality loss while increasing direct‑play success across very mixed devices</li>
+<li>Constraint: A grab‑bag of clients (older TVs, phones, SDR‑only panels, a few HDR10 sets, and just a couple of AV1‑capable devices)</li>
+</ul>
+<h2 id="standards-vs-implementations">2. Standards vs Implementations</h2>
+<p>Early on I kept bouncing between wikis, forum threads and ffmpeg docs just to decode people’s shorthand. Eventually it clicked: a <em>spec</em> (H.264/AVC, H.265/HEVC, AV1) is the published standard; <em>implementations</em> are the real-world encoders and decoders (ffmpeg builds, NVENC firmware generations, Intel Quick Sync versions, software encoders like libx265 or SVT‑AV1). They differ in speed, efficiency and feature completeness.</p>
+<h3 id="eli5-glossary-what-i-wish-i-had-on-day-one">ELI5 Glossary (What I Wish I Had On Day One)</h3>
+<ul>
+<li>Codec: The compression method spec (e.g. H.264, HEVC, AV1, AAC).</li>
+<li>Encoding: Creating a compressed file from raw (or less‑compressed) source.</li>
+<li>Transcoding: Re‑encoding an existing file into a different codec, profile, bitrate or container (always risks some quality loss if the video stream is recompressed).</li>
+<li>Container / Format: The wrapper that holds video, audio, subtitles, metadata (MKV, MP4, MOV). Changing the container alone doesn’t affect quality.</li>
+<li>Profile / Level: Capability tiers inside a codec (e.g. Main10, Dolby Vision enhancement layers). Some devices only support a subset.</li>
+<li>Video Dynamic Range: SDR vs HDR10 vs Dolby Vision—how brightness &amp; color are represented. Unsupported formats → washed out or crushed image.</li>
+<li>Standard vs Implementation: “HEVC” is the standard; NVENC HEVC, Quick Sync HEVC, libx265 are separate implementations with different trade‑offs.</li>
+<li>Hardware Encoder: Fixed‑function block on GPU/iGPU (NVENC, Quick Sync) — fast, predictable, “good enough” quality per bitrate.</li>
+<li>Software Encoder: CPU / compute based (libx265 slow presets, SVT‑AV1) — slower but can squeeze more quality at a given bitrate.</li>
+<li>Quality Loss: Artifacts introduced by lossy re‑encoding (banding, blockiness, mushy detail). Fewer passes = fewer risks.</li>
+</ul>
+<p>Once these clicked, the rest became pattern matching: choose the codec that balances compatibility + size, pick the implementation that’s fast enough, avoid unnecessary passes.</p>
+<h2 id="hardware-inventory-capabilities">3. Hardware Inventory &amp; Capabilities</h2>
+<table>
+<thead>
+<tr>
+<th>Hardware</th>
+<th>Strength</th>
+<th>Limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NVIDIA RTX 3090</td>
+<td>Fast H.264 + HEVC (NVENC) batch work; low CPU usage</td>
+<td>No AV1 encode (decode only)</td>
+</tr>
+<tr>
+<td>Intel i9 iGPU (Quick Sync)</td>
+<td>AV1 encode support; efficient for trickle jobs</td>
+<td>Slower per file than 3090 for HEVC</td>
+</tr>
+<tr>
+<td>CPU (software encoders)</td>
+<td>Highest potential quality at slow presets</td>
+<td>Too slow &amp; power hungry for the backlog</td>
+</tr>
+</tbody>
+</table>
+<p>Strategy: Let the 3090 chew through obvious H.264 → HEVC conversions; park “high‑value” titles in a future AV1 queue for the iGPU (or upgraded hardware) once the easy storage wins are done.</p>
+<h2 id="codec-trade-offs-practical-view">4. Codec Trade-offs (Practical View)</h2>
+<ul>
+<li>H.264 (AVC): Universally compatible baseline; least efficient of the modern trio. (See: <a href="https://en.wikipedia.org/wiki/Advanced_Video_Coding">AVC</a>)</li>
+<li>HEVC (H.265): ~25–50% bitrate reduction versus AVC at similar perceived quality; wide hardware decode; licensing baggage. (<a href="https://en.wikipedia.org/wiki/High_Efficiency_Video_Coding">HEVC</a>)</li>
+<li>AV1: Royalty‑free; strong compression efficiency; encode speed improving; hardware decode/encode adoption still ramping. (<a href="https://en.wikipedia.org/wiki/AV1">AV1</a>)</li>
+<li>AAC: Successor to MP3; better quality at the same bitrate; widely supported—simplifies mixed device playback. (<a href="https://en.wikipedia.org/wiki/Advanced_Audio_Coding">AAC</a>)</li>
+</ul>
+<h2 id="licensing-why-some-things-dont-transcode">5. Licensing &amp; Why Some Things Don’t Transcode</h2>
+<p>Plex may fall back or refuse certain transcodes when patent‑encumbered codecs or profiles appear and a valid path (hardware + software stack) isn’t present. AV1’s royalty‑free status makes it the <em>future‑proof</em> target for archival lanes. HEVC remains a pragmatic middle ground today given my 3090 throughput.</p>
+<h2 id="how-i-actually-run-it-simplified">6. How I Actually Run It (Simplified)</h2>
+<p>I ended up ditching over‑engineering. I have <em>two</em> main working library lanes:</p>
+<ul>
+<li>HEVC Lane: Anything still bloated in H.264 or obviously wasteful → NVENC HEVC pass.</li>
+<li>AV1 Lane (tagged queue): High‑value / long‑term stuff I’ll slowly convert with Quick Sync (or future GPU) when idle.</li>
+</ul>
+<p>Automation: Unmanic detects candidates and launches the right worker. Each worker is tagged (HEVC or AV1). I still eyeball edge cases to avoid silent junk.</p>
+<p>Audio: Standardise to AAC unless there’s a <em>clear</em> reason to keep a lossless or multi‑track original (rare). Simplicity wins.</p>
+<p>Quality Guardrails:</p>
+<ul>
+<li>CRF/quality‑targeted encodes, not rigid bitrates.</li>
+<li>Occasional metrics only if something looks off (no over‑instrumentation).</li>
+<li>One conversion per asset—avoid “transcode churn”.</li>
+</ul>
+<p>That’s it. No sprawling pipeline graph—just staged queues and hardware matched to the job.</p>
+<h2 id="notes-on-tweaks">7. Notes on Tweaks</h2>
+<ul>
+<li>Start small → validate → scale.</li>
+<li>Pair hardware decode with hardware encode—frees CPU.</li>
+<li>Maintain a tiny “needs review” pile to keep quality honest.</li>
+</ul>
+<h2 id="storage-wins">8. Storage Wins</h2>
+<p>After targeted HEVC conversions plus audio clean‑up I’ve reclaimed 500+ GB with no <em>visible</em> quality loss (living‑room subjective checks + a few spot VMAF/SSIM comparisons). Biggest wins: over‑provisioned H.264 TV episodes and redundant multi‑track audio.</p>
+<h2 id="hdr-dolby-vision-confusion">9. HDR / Dolby Vision Confusion</h2>
+<p>Reality: Dolby Vision files with an HDR10 fallback <em>usually</em> behaved—but sometimes I’d get dim scenes or weird oversaturation. Hard to tell if it was the file, tone mapping, or the display with HDR disabled to save power. Dolby Vision uses dynamic per‑scene metadata; HDR10 is static. If the chain mishandles that, colors drift. (Refs: <a href="https://en.wikipedia.org/wiki/Dolby_Vision">Dolby Vision</a>, <a href="https://en.wikipedia.org/wiki/HDR10">HDR10</a>)</p>
+<p>I’m not chasing cinematic color science perfection. I just want stuff to look normal everywhere. So the rule now:</p>
+<ul>
+<li>Prefer clean SDR or plain HDR10 sources.</li>
+<li>Avoid niche DV variants unless <em>all</em> primary devices benefit.</li>
+<li>If a file constantly causes color weirdness → replace/remux/re‑encode it into something boring and compatible.</li>
+</ul>
+<p>Result: Less time squinting at gradients; more time actually watching.</p>
+<h2 id="direct-play-clever-transcoding">10. Direct Play &gt; Clever Transcoding</h2>
+<p>If Plex can just hand the file to the device unchanged, everybody’s happier. Less server load, less delay, fewer “why is it buffering?” pings. If someone’s watching on a 9‑year‑old bargain TV that can’t handle it—I’m not rebuilding the library for that edge. Upgrade the device.</p>
+<h2 id="hardware-quirks">11. Hardware Quirks</h2>
+<p>The 3090 is a gaming beast, but NVENC is still a single fixed block—so simultaneous encode throughput isn’t infinite. Meanwhile the iGPU happily churns a couple of AV1 jobs. Lesson: raw GPU size ≠ unlimited encode lanes.</p>
+<p>Takeaways:</p>
+<ul>
+<li>Don’t assume “huge GPU = infinite transcodes”.</li>
+<li>Stagger HEVC jobs; park AV1 on the iGPU when I’m not using it.</li>
+<li>Balance matters more than theoretical peak charts.</li>
+</ul>
+<h2 id="slow-selective-av1-adoption">12. Slow &amp; Selective AV1 Adoption</h2>
+<p>Not rushing a full AV1 flip because:</p>
+<ul>
+<li>Time sink for marginal additional savings on already efficient HEVC.</li>
+<li>Tooling + hardware encode speed still improving.</li>
+<li>Library hygiene first; perfection later.</li>
+</ul>
+<p>So: gradual, high‑value targets only. The rest waits.</p>
+<h2 id="decision-matrix">13. Decision Matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Action Now</th>
+<th>Future Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>High bitrate H.264 1080p</td>
+<td>Transcode → HEVC</td>
+<td>Maybe AV1 (archive tier)</td>
+</tr>
+<tr>
+<td>Low bitrate H.264 TV rip</td>
+<td>Leave (diminishing returns)</td>
+<td>Skip</td>
+</tr>
+<tr>
+<td>4K HEVC high bitrate</td>
+<td>Evaluate; maybe CRF re‑encode</td>
+<td>Possible AV1</td>
+</tr>
+<tr>
+<td>Animated content</td>
+<td>Queue HEVC (good gains)</td>
+<td>High AV1 potential later</td>
+</tr>
+<tr>
+<td>Niche / weird profile</td>
+<td>Manual review</td>
+<td>Normalize container</td>
+</tr>
+</tbody>
+</table>
+<h2 id="audio-rationalisation">14. Audio Rationalisation</h2>
+<ul>
+<li>Convert scattered AC3/DTS to AAC where safe for broad compatibility + modest size savings.</li>
+<li>Keep original lossless only for genuinely premium titles (not everything needs archival audio).</li>
+</ul>
+<h2 id="tooling-mentions">15. Tooling Mentions</h2>
+<ul>
+<li>Unraid: Flexible disk layout.</li>
+<li>Plex: Unified streaming &amp; client intelligence.</li>
+<li>Unmanic: Automation glue + plugin ecosystem.</li>
+<li>ffmpeg: The workhorse under the hood.</li>
+</ul>
+<h2 id="key-lessons">16. Key Lessons</h2>
+<ul>
+<li>Organise before mass convert.</li>
+<li>Split libraries by <em>intent</em>, not just genre.</li>
+<li>Use the hardware you already own before shopping upgrades.</li>
+<li>Track savings (or you’re guessing).</li>
+<li>Avoid transcoding HDR unless necessary.</li>
+<li>Stage AV1 adoption; no big‑bang rewrite.</li>
+</ul>
+<h2 id="whats-next">17. What’s Next</h2>
+<ol>
+<li>Finish converting the obviously bloated H.264 backlog to HEVC.</li>
+<li>Run a small AV1 pilot batch (favourites) and measure real gain vs time.</li>
+<li>Script a lightweight report: space saved / day + direct play %.</li>
+<li>Revisit broader AV1 rollout after backlog stabilises.</li>
+</ol>
+<h2 id="outcome-operating-principles">18. Outcome &amp; Operating Principles</h2>
+<p>My focus evolved from “compress everything” to delivering a consistent, low‑friction viewing experience for anyone hitting the server—while silently reclaiming space. The practical pillars now:</p>
+<ol>
+<li>Seamless playback first: maximise direct play across common TVs, tablets, phones.</li>
+<li>Measured compression: change it only when objective bloat or no visible delta justifies the time.</li>
+<li>Codec uniformity: converge on HEVC now; introduce AV1 gradually; standardise audio on AAC. (<a href="https://en.wikipedia.org/wiki/High_Efficiency_Video_Coding">HEVC</a> / <a href="https://en.wikipedia.org/wiki/AV1">AV1</a> / <a href="https://en.wikipedia.org/wiki/Advanced_Audio_Coding">AAC</a>)</li>
+<li>Profile pragmatism: drop exotic HDR layers that add support headaches; clean HDR10 or SDR is fine. (<a href="https://en.wikipedia.org/wiki/Dolby_Vision">Dolby Vision</a> / <a href="https://en.wikipedia.org/wiki/HDR10">HDR10</a>)</li>
+<li>Quality rescue: fix the small set of clearly bad encodes once—don’t churn them repeatedly.</li>
+<li>Storage efficiency: treat GB saved per hour as a guiding metric.</li>
+</ol>
+<p>In short: optimise for direct play, normalise selectively, and let measured savings drive the next pass.</p>
+<h2 id="references">References</h2>
+<ul>
+<li>AV1 – <a href="https://en.wikipedia.org/wiki/AV1">https://en.wikipedia.org/wiki/AV1</a></li>
+<li>HEVC – <a href="https://en.wikipedia.org/wiki/High_Efficiency_Video_Coding">https://en.wikipedia.org/wiki/High_Efficiency_Video_Coding</a></li>
+<li>AVC (H.264) – <a href="https://en.wikipedia.org/wiki/Advanced_Video_Coding">https://en.wikipedia.org/wiki/Advanced_Video_Coding</a></li>
+<li>Dolby Vision – <a href="https://en.wikipedia.org/wiki/Dolby_Vision">https://en.wikipedia.org/wiki/Dolby_Vision</a></li>
+<li>HDR10 – <a href="https://en.wikipedia.org/wiki/HDR10">https://en.wikipedia.org/wiki/HDR10</a></li>
+<li>AAC – <a href="https://en.wikipedia.org/wiki/Advanced_Audio_Coding">https://en.wikipedia.org/wiki/Advanced_Audio_Coding</a></li>
+</ul>
+
+<div class="comments">
+    <div id="disqus_thread"></div>
+    <script>
+        /**
+        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+        /*
+        var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://' + 'pjmagee-github-io' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+        <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright text-muted m-0">Copyright &#xA9; 2025</p>
+                    <br />
+                    <ul class="list-inline text-center small">
+                            <li class="list-inline-item">
+                                <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="/feed.atom"><i class="fa fa-square-rss"></i> Atom Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="http://stackoverflow.com/users/935280/patrick-magee"><i class="fa-brands fa-stack-overflow"></i> Stack Overflow</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://www.linkedin.com/in/patrick-magee-76216959"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://github.com/pjmagee"><i class="fa-brands fa-github-square"></i> GitHub</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://twitter.com/PatrickMageez"><i class="fa-brands fa-twitter-square"></i> Twitter</a>
+                            </li>
+                    </ul>
+                    <br />
+                    <div class="font-weight-bold small"><a href="https://statiq.dev">Generated by Statiq</a></div>
+                </div>
+        </div>
+    </div>
+</footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  
+<script>
+       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-51533669-1', 'auto');
+		ga('send', 'pageview', {
+		  'page': '<a href="/posts/2025-09-06-unraid-plex-codec-transcoding-journey">My Codec &amp; Transcoding Journey</a>',
+		  'title': 'Patrick&#x27;s Blog - My Codec &amp; Transcoding Journey'
+		});
+</script>
+
+
+  
+
+  <!-- Custom scripts for this template -->
+  <script src="/js/clean-blog.js"></script>
+
+</body>
+
+</html>
